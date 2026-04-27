@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eQuality — Environmental Risk Scoring Platform</title>
+<meta name="description" content="Standardized, property-level environmental risk intelligence for insurance, lending, and capital markets.">
+<meta property="og:title" content="eQuality — Environmental Risk Intelligence">
+<meta property="og:description" content="Standardized, property-level environmental risk scoring for institutional capital. Request early access.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://equality.ieit.io">
+<meta property="og:image" content="https://equality.ieit.io/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FFFFFF;
+  --bg-subtle: #F7F8FA;
+  --bg-muted: #F0F2F5;
+  --navy: #1B2A4A;
+  --navy-dark: #0F1B33;
+  --navy-btn: #1B2A4A;
+  --navy-btn-hover: #142240;
+  --accent: #1B2A4A;
+  --green: #1A7A5C;
+  --green-bg: rgba(26,122,92,0.07);
+  --amber: #A16207;
+  --amber-bg: rgba(161,98,7,0.07);
+  --red: #B91C1C;
+  --text: #1A1D23;
+  --text-sec: #4A5064;
+  --text-muted: #8B90A0;
+  --border: #D8DCE3;
+  --border-light: #ECEEF2;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  font-size: 17px;
+}
+
+.container { max-width: 880px; margin: 0 auto; padding: 0 28px; }
+
+/* ── Topbar ── */
+.topbar {
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border-light);
+  background: var(--bg);
+  position: sticky; top: 0; z-index: 10;
+}
+.topbar-inner {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo {
+  font-family: var(--serif);
+  font-size: 26px; font-weight: 400;
+  color: var(--navy-dark); letter-spacing: -0.01em;
+}
+.logo-sep {
+  display: inline-block; width: 1px; height: 22px;
+  background: var(--border); margin: 0 16px;
+  vertical-align: middle;
+}
+.logo-sub {
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text-muted); letter-spacing: 0.08em;
+  text-transform: uppercase; vertical-align: middle;
+}
+.topbar-right {
+  display: flex; align-items: center; gap: 12px;
+}
+.tag {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  color: var(--navy); background: var(--bg);
+  padding: 5px 12px; border-radius: 4px;
+  border: 1.5px solid var(--border);
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.tag-ieit {
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text-muted); letter-spacing: 0.06em;
+}
+
+/* ── Hero ── */
+.hero {
+  padding: 80px 0 64px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(34px, 5.5vw, 54px);
+  font-weight: 400; letter-spacing: -0.02em;
+  line-height: 1.15; margin-bottom: 22px;
+  color: var(--navy-dark);
+}
+
+.hero-sub {
+  font-size: 19px; color: var(--text-sec);
+  max-width: 560px; margin: 0 auto 44px;
+  line-height: 1.75;
+}
+
+/* ── Email form ── */
+.form-wrap { max-width: 480px; margin: 0 auto; }
+
+.email-form { display: flex; gap: 10px; }
+.email-form input[type="email"] {
+  flex: 1; padding: 15px 18px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 6px; color: var(--text);
+  font-family: var(--sans); font-size: 16px;
+  outline: none; transition: border-color .2s;
+}
+.email-form input[type="email"]::placeholder { color: var(--text-muted); }
+.email-form input[type="email"]:focus { border-color: var(--navy); }
+
+.email-form button {
+  padding: 15px 26px;
+  background: var(--navy-btn); color: #fff;
+  border: none; border-radius: 6px;
+  font-family: var(--mono); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer; white-space: nowrap;
+  transition: background .2s, transform .1s;
+}
+.email-form button:hover { background: var(--navy-btn-hover); }
+.email-form button:active { transform: scale(0.97); }
+
+.form-note {
+  font-size: 13px; color: var(--text-muted);
+  margin-top: 12px; text-align: center;
+}
+
+.confirmation {
+  display: none; text-align: center; padding: 18px 24px;
+  background: var(--green-bg); border: 1px solid rgba(26,122,92,0.18);
+  border-radius: 6px;
+}
+.confirmation p { color: var(--green); font-size: 16px; font-weight: 500; }
+.confirmation .sub {
+  color: var(--text-sec); font-size: 14px; font-weight: 400; margin-top: 4px;
+}
+
+/* ── Score card ── */
+.score-preview {
+  margin: 52px auto 0; max-width: 340px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px; padding: 24px 28px;
+  text-align: left;
+}
+.score-preview-label {
+  font-size: 11px; font-family: var(--mono);
+  color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 0.1em; margin-bottom: 12px;
+}
+.score-value {
+  font-family: var(--mono); font-size: 38px; font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.score-value .prop { color: var(--green); }
+.score-value .sep { color: var(--text-muted); margin: 0 2px; }
+.score-value .op { color: var(--amber); }
+.score-bar {
+  margin: 16px 0 10px; height: 5px;
+  background: var(--bg-muted); border-radius: 3px;
+  position: relative; overflow: hidden;
+}
+.score-bar-fill {
+  position: absolute; top: 0; left: 0; height: 100%; width: 62%;
+  background: linear-gradient(90deg, var(--red), var(--amber), var(--green));
+  border-radius: 3px; animation: fill 1.4s ease-out .5s both;
+}
+@keyframes fill { from { width: 0; } }
+.score-meta {
+  display: flex; justify-content: space-between;
+  font-size: 11px; font-family: var(--mono); color: var(--text-muted);
+}
+.score-desc {
+  margin-top: 14px; padding-top: 14px;
+  border-top: 1px solid var(--border-light);
+  font-size: 13px; color: var(--text-sec); line-height: 1.6;
+}
+.score-desc strong { color: var(--text); font-weight: 500; }
+
+/* ── Divider ── */
+.divider {
+  width: 48px; height: 1px; background: var(--border);
+  margin: 32px auto;
+}
+
+/* ── Value section ── */
+.value-section { padding: 0 0 48px; text-align: center; }
+.value-section h2 {
+  font-family: var(--serif); font-size: 28px; font-weight: 400;
+  color: var(--navy-dark); margin-bottom: 10px; letter-spacing: -0.01em;
+}
+.value-section .container > p {
+  font-size: 17px; color: var(--text-sec);
+  max-width: 520px; margin: 0 auto 52px; line-height: 1.7;
+}
+
+.how-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px; text-align: left;
+}
+.how-card {
+  background: var(--bg);
+  border: 1.5px solid var(--border-light);
+  border-radius: 8px; padding: 28px 24px;
+  transition: border-color .2s;
+}
+.how-card:hover { border-color: var(--border); }
+
+.how-step {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 0.1em; margin-bottom: 14px;
+}
+.how-card h3 {
+  font-size: 17px; font-weight: 600; margin-bottom: 10px;
+  color: var(--navy-dark);
+}
+.how-card p {
+  font-size: 15px; color: var(--text-sec); line-height: 1.7;
+}
+
+/* ── Use cases ── */
+.use-cases { padding: 32px 0 56px; }
+.use-cases h2 {
+  font-family: var(--serif); font-size: 28px; font-weight: 400;
+  color: var(--navy-dark); margin-bottom: 12px; text-align: center;
+  letter-spacing: -0.01em;
+}
+.use-cases > .container > p {
+  font-size: 17px; color: var(--text-sec); text-align: center;
+  max-width: 480px; margin: 0 auto 32px;
+}
+.uc-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.uc-item {
+  padding: 20px 24px;
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--navy);
+  border-radius: 0 6px 6px 0;
+}
+.uc-item strong {
+  display: block; margin-bottom: 4px;
+  font-weight: 600; color: var(--navy-dark); font-size: 16px;
+}
+.uc-item span { color: var(--text-sec); font-size: 15px; line-height: 1.6; }
+
+/* ── Bottom CTA ── */
+.bottom-cta {
+  padding: 64px 28px;
+  text-align: center;
+  background: var(--bg-subtle);
+  border-top: 1px solid var(--border-light);
+}
+.bottom-cta h2 {
+  font-family: var(--serif); font-size: 26px; font-weight: 400;
+  margin-bottom: 8px; color: var(--navy-dark);
+}
+.bottom-cta p {
+  font-size: 16px; color: var(--text-sec); margin-bottom: 28px;
+}
+
+/* ── Footer ── */
+footer {
+  padding: 28px 0;
+  border-top: 1px solid var(--border-light);
+  text-align: center;
+}
+.footer-brand {
+  font-size: 13px; color: var(--text-muted); margin-bottom: 4px;
+}
+.footer-brand a { color: var(--text-sec); text-decoration: none; }
+.footer-brand a:hover { color: var(--navy); }
+.footer-copy { font-size: 11px; color: var(--text-muted); font-family: var(--mono); }
+.footer-copy a { color: var(--text-muted); text-decoration: none; }
+.footer-copy a:hover { color: var(--text-sec); }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+  .hero { padding: 56px 0 48px; }
+  .hero h1 { font-size: 30px; }
+  .hero-sub { font-size: 17px; margin-bottom: 32px; }
+  .email-form { flex-direction: column; }
+  .email-form button { width: 100%; padding: 16px; font-size: 13px; }
+  .email-form input[type="email"] { padding: 16px 18px; font-size: 16px; }
+  .score-preview { max-width: 100%; }
+  .how-grid { grid-template-columns: 1fr; gap: 14px; }
+  .uc-grid { grid-template-columns: 1fr; gap: 12px; }
+  .partner-grid { gap: 10px; }
+  .partner-slot { width: 120px; height: 44px; }
+  .logo { font-size: 22px; }
+  .logo-sep { margin: 0 10px; }
+  .logo-sub { font-size: 10px; }
+  .value-section h2, .use-cases h2 { font-size: 24px; }
+  .bottom-cta h2 { font-size: 22px; }
+  .topbar-right { gap: 8px; }
+  .tag { font-size: 10px; padding: 4px 8px; }
+}
+@media (max-width: 420px) {
+  .container { padding: 0 20px; }
+  .hero h1 { font-size: 26px; }
+  .hero-sub { font-size: 16px; }
+  .score-value { font-size: 30px; }
+  .logo-sep, .logo-sub { display: none; }
+  .how-card h3 { font-size: 16px; }
+  .how-card p { font-size: 14px; }
+}
+
+.reveal {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="container topbar-inner">
+    <div>
+      <span class="logo">eQuality</span>
+      <span class="logo-sep"></span>
+      <span class="logo-sub">Insurance Workflow Platform</span>
+    </div>
+    <div class="topbar-right">
+      <span class="tag">Early Access</span>
+      <span class="tag-ieit">IEIT</span>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Environmental risk scoring<br>for institutional capital</h1>
+    <p class="hero-sub">
+      A standardized, property-level environmental risk signal
+      designed for insurance underwriting, commercial lending,
+      and portfolio risk management.
+    </p>
+
+    <div class="form-wrap" id="hero-form-wrap">
+      <!-- Formspree endpoint connected -->
+      <form class="email-form" id="hero-form" action="https://formspree.io/f/mkokkney" method="POST">
+        <input type="email" name="email" placeholder="Work email" required autocomplete="email" aria-label="Email address">
+        <button type="submit">Request Access</button>
+      </form>
+      <div class="form-note">For institutional and enterprise inquiries. No spam.</div>
+      <div class="confirmation" id="hero-confirm">
+        <p>You're on the list.</p>
+        <p class="sub">We'll be in touch when access opens.</p>
+      </div>
+    </div>
+
+    <div class="score-preview reveal">
+      <div class="score-preview-label">Sample output</div>
+      <div class="score-value"><span class="prop">e640</span></div>
+      <div class="score-bar"><div class="score-bar-fill"></div></div>
+      <div class="score-meta"><span>Higher risk</span><span>Lower risk</span></div>
+      <div class="score-desc">
+        <strong>Property score</strong> reflects site-level environmental condition.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="value-section">
+  <div class="container">
+    <h2>How it works</h2>
+    <p>From fragmented regulatory data to a single, machine-readable risk signal.</p>
+    <div class="how-grid">
+      <div class="how-card reveal">
+        <div class="how-step">Aggregate</div>
+        <h3>Regulatory data integration</h3>
+        <p>Continuous ingestion from federal and state environmental databases, normalized to the parcel level and updated as records change.</p>
+      </div>
+      <div class="how-card reveal">
+        <div class="how-step">Score</div>
+        <h3>Property-level scoring</h3>
+        <p>A structured scoring methodology that translates fragmented environmental data into a standardized, property-level risk signal.</p>
+      </div>
+      <div class="how-card reveal">
+        <div class="how-step">Deliver</div>
+        <h3>Workflow integration</h3>
+        <p>Scores are delivered via API into underwriting platforms, loan origination systems, and portfolio management tools.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="use-cases">
+  <div class="container">
+    <h2>Built for institutional workflows</h2>
+    <p>Designed to integrate where environmental risk decisions are already being made.</p>
+    <div class="uc-grid">
+      <div class="uc-item reveal">
+        <strong>Underwriting triage</strong>
+        <span>Score-based routing replaces manual review for routine environmental submissions.</span>
+      </div>
+      <div class="uc-item reveal">
+        <strong>Actuarial integration</strong>
+        <span>A site-level rating variable that supplements class-based pricing with property-specific data.</span>
+      </div>
+      <div class="uc-item reveal">
+        <strong>Lender due diligence</strong>
+        <span>Machine-readable environmental signal at loan commitment, with ongoing portfolio monitoring.</span>
+      </div>
+      <div class="uc-item reveal">
+        <strong>Portfolio risk management</strong>
+        <span>Aggregate environmental exposure across a book of business for reinsurance and capital planning.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="bottom-cta">
+  <div class="container">
+    <h2>Request early access</h2>
+    <p>Be among the first institutions to integrate standardized environmental risk intelligence.</p>
+    <div class="form-wrap" id="bottom-form-wrap">
+      <form class="email-form" id="bottom-form" action="https://formspree.io/f/mkokkney" method="POST">
+        <input type="email" name="email" placeholder="Work email" required autocomplete="email" aria-label="Email address">
+        <button type="submit">Request Access</button>
+      </form>
+      <div class="confirmation" id="bottom-confirm">
+        <p>You're on the list.</p>
+        <p class="sub">We'll be in touch when access opens.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-brand">
+      <a href="https://equality.ieit.io/">Impact Environmental Information Technologies</a>
+    </div>
+    <div class="footer-copy">
+      &copy; 2026 IEIT &middot; eQuality
+    </div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.email-form').forEach(f => {
+  f.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const em = this.querySelector('input[type="email"]').value;
+    if (!em) return;
+    const b = this.querySelector('button');
+    b.textContent = 'SUBMITTING\u2026'; b.disabled = true; b.style.opacity = '.7';
+    fetch(this.action, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ email: em })
+    })
+    .then(r => { if (r.ok) done(this); else throw new Error(); })
+    .catch(() => { b.textContent = 'REQUEST ACCESS'; b.disabled = false; b.style.opacity = '1'; alert('Something went wrong. Please try again.'); });
+  });
+});
+function done(f) {
+  const w = f.parentElement; f.style.display = 'none';
+  const n = w.querySelector('.form-note'); if (n) n.style.display = 'none';
+  w.querySelector('.confirmation').style.display = 'block';
+}
+const ro = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+</script>
+</body>
+</html>
