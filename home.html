@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>eQuality INDEX | Institutional Grade Data Assessment</title>
+
+<!-- Brand Fonts: Public Sans (headlines), Hanken Grotesk (body), Geist (data/mono) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;700&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<style>
+/* ──────────────── DESIGN TOKENS: DARK MODE (default) ──────────────── */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --surface:             #101415;
+  --surface-dim:         #0b0f10;
+  --surface-low:         #191c1e;
+  --surface-mid:         #1d2022;
+  --surface-high:        #272a2c;
+  --surface-highest:     #323537;
+
+  /* Text */
+  --on-surface:          #e0e3e5;
+  --on-surface-dim:      #909097;
+
+  /* Borders */
+  --outline:             #909097;
+  --outline-dim:         #2e3133;
+
+  /* Brand blue — primary interactive + wordmark in dark */
+  --primary:             #bec6e0;
+  --on-primary:          #1d2637;
+  --secondary:           #9aafd4;
+
+  /* Wordmark: in dark mode keep as --on-surface (light) */
+  --wordmark-color:      #e0e3e5;
+  --wordmark-sub-color:  #bec6e0;
+
+  /* Dark green — status, verified, positive indicators */
+  --green:               #0d6b42;       /* dark forest green */
+  --green-text:          #2aab6e;       /* readable on dark surfaces */
+  --green-bg:            rgba(13,107,66,0.18);
+  --green-border:        rgba(13,107,66,0.4);
+
+  /* Amber — review/warning */
+  --amber:               #b45309;
+  --amber-text:          #f0b429;
+
+  /* Intro screen always dark */
+  --intro-bg:            #0b0f10;
+  --intro-grid:          rgba(190,198,224,0.04);
+  --intro-corner:        rgba(190,198,224,0.3);
+
+  /* Glow tint */
+  --hero-glow:           rgba(13,107,66,0.07);
+
+  /* Row flash */
+  --flash-bg:            rgba(13,107,66,0.12);
+
+  /* Brand typography */
+  --font-head:  'Public Sans', sans-serif;
+  --font-body:  'Hanken Grotesk', sans-serif;
+  --font-mono:  'Geist', monospace;
+
+  --r-sm:  0.25rem;
+  --r:     0.5rem;
+  --r-md:  0.75rem;
+  --r-lg:  1rem;
+  --r-xl:  1.5rem;
+}
+
+/* ──────────────── DESIGN TOKENS: LIGHT MODE ──────────────── */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --surface:             #f8fafc;
+  --surface-dim:         #e9edf2;
+  --surface-low:         #f0f4f8;
+  --surface-mid:         #ffffff;
+  --surface-high:        #e4eaf2;
+  --surface-highest:     #d6dde8;
+
+  --on-surface:          #0f172a;
+  --on-surface-dim:      #475569;
+
+  --outline:             #94a3b8;
+  --outline-dim:         #cbd5e1;
+
+  /* Primary in light: desaturated navy blue */
+  --primary:             #1e3a6e;
+  --on-primary:          #ffffff;
+  --secondary:           #2d4f8e;
+
+  /* Wordmark: eQuality INDEX in deep navy blue in light mode */
+  --wordmark-color:      #0f172a;
+  --wordmark-sub-color:  #1e3a6e;
+
+  /* Dark green — readable on light surfaces */
+  --green:               #064e3b;
+  --green-text:          #065f46;
+  --green-bg:            rgba(6,78,59,0.08);
+  --green-border:        rgba(6,78,59,0.25);
+
+  --amber:               #92400e;
+  --amber-text:          #b45309;
+
+  --hero-glow:           rgba(30,58,110,0.06);
+  --flash-bg:            rgba(6,78,59,0.08);
+  --intro-grid:          rgba(30,58,110,0.04);
+}
+
+/* ──────────────── RESET ──────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* ── FONT ENFORCEMENT: every element explicitly uses a brand font.
+      No element may fall through to browser/OS defaults.          ── */
+html, body, input, textarea, select {
+  font-family: 'Hanken Grotesk', sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Public Sans', sans-serif;
+}
+button, [role="button"] {
+  font-family: 'Geist', monospace;
+}
+code, pre, kbd, samp {
+  font-family: 'Geist', monospace;
+}
+
+body {
+  background: var(--surface);
+  color: var(--on-surface);
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: 'Geist', monospace; color: inherit; }
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+
+/* ──────────────── NAV ──────────────── */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--outline-dim);
+  padding: 0 32px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.2s, background 0.3s ease, border-color 0.3s ease;
+}
+header.visible { opacity: 1; }
+
+
+
+.nav-wordmark { display: flex; flex-direction: column; line-height: 1; gap: 3px; }
+
+
+.nav-wordmark { display: flex; flex-direction: column; line-height: 1; gap: 2px; }
+.nav-equality {
+  font-family: 'Public Sans', sans-serif;
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--wordmark-color);
+  transition: color 0.3s ease;
+  line-height: 1;
+}
+.nav-index {
+  font-family: 'Geist', monospace;
+  font-size: 8px;
+  letter-spacing: 0.35em;
+  color: var(--wordmark-sub-color);
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+  line-height: 1;
+}
+
+nav { display: flex; align-items: center; gap: 32px; }
+nav a {
+  font-family: 'Geist', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+  transition: color 0.2s;
+}
+nav a:hover, nav a.active { color: var(--on-surface); }
+nav a.active { color: var(--primary); }
+
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+.nav-pill {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: var(--r-full, 9999px);
+  border: 1px solid var(--outline-dim);
+  color: var(--on-surface-dim);
+  transition: all 0.2s;
+}
+.nav-pill:hover { border-color: var(--primary); color: var(--primary); }
+.nav-pill.primary {
+  background: var(--primary);
+  color: var(--on-primary);
+  border-color: var(--primary);
+}
+.nav-pill.primary:hover { background: var(--secondary); }
+
+/* ──────────────── MAIN CONTENT ──────────────── */
+main { opacity: 1; transition: none; }
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ──────────────── HERO ──────────────── */
+.hero {
+  padding: 96px 0 80px;
+  border-bottom: 1px solid var(--outline-dim);
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--intro-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--intro-grid) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+}
+.hero-bg-glow {
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, var(--hero-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border: 1px solid var(--outline-dim);
+  border-radius: 9999px;
+  margin-bottom: 28px;
+}
+.hero-badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green-text);
+  animation: blink 2s ease infinite;
+}
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.hero-badge-text {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+}
+
+.hero-headline {
+  font-family: 'Public Sans', sans-serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--on-surface);
+  max-width: 700px;
+  margin-bottom: 24px;
+}
+.hero-headline em {
+  font-style: normal;
+  color: var(--primary);
+}
+
+.hero-sub {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--on-surface-dim);
+  max-width: 540px;
+  margin-bottom: 40px;
+}
+
+.hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: var(--r);
+  font-family: 'Geist', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.btn-primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.btn-primary:hover { background: var(--secondary); }
+.btn-ghost {
+  border-color: var(--outline-dim);
+  color: var(--on-surface-dim);
+}
+.btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+
+.hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--outline-dim);
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-top: 64px;
+}
+.hero-metric {
+  background: var(--surface-mid);
+  padding: 24px 28px;
+  transition: background 0.2s;
+}
+.hero-metric:hover { background: var(--surface-high); }
+.hero-metric-label {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+  margin-bottom: 8px;
+}
+.hero-metric-value {
+  font-family: 'Geist', monospace;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--on-surface);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.hero-metric-value.green { color: var(--green-text); }
+.hero-metric-sub {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  color: var(--on-surface-dim);
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* ──────────────── LIVE FEED ──────────────── */
+.section { padding: 80px 0; border-bottom: 1px solid var(--outline-dim); }
+.section-label {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green-text);
+  animation: blink 1.4s ease infinite;
+}
+.section-title {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--on-surface);
+  margin-bottom: 32px;
+}
+
+/* Table */
+.data-table {
+  width: 100%;
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.table-head {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  padding: 12px 24px;
+  background: var(--surface-low);
+  border-bottom: 1px solid var(--outline-dim);
+}
+.th {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+}
+.th:not(:first-child) { text-align: right; }
+
+.table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  padding: 18px 24px;
+  align-items: center;
+  border-bottom: 1px solid var(--outline-dim);
+  cursor: pointer;
+  transition: background 0.15s;
+  position: relative;
+}
+.table-row:last-child { border-bottom: none; }
+.table-row:hover { background: var(--surface-low); }
+.table-row.active { background: var(--surface-high); }
+.table-row.flash {
+  animation: rowFlash 0.6s ease;
+}
+@keyframes rowFlash {
+  0% { background: var(--green-bg); }
+  100% { background: transparent; }
+}
+
+.asset-name {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--on-surface);
+}
+.asset-id {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  color: var(--on-surface-dim);
+  margin-top: 3px;
+  letter-spacing: 0.05em;
+}
+.td-mono {
+  font-family: 'Geist', monospace;
+  font-size: 13px;
+  text-align: right;
+  color: var(--on-surface);
+}
+.td-mono.dim { color: var(--on-surface-dim); }
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  padding: 4px 0;
+  background: var(--surface-high);
+  border-radius: var(--r-sm);
+  font-family: 'Geist', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--on-surface);
+  margin-left: auto;
+  transition: background 0.2s;
+}
+.score-badge.high { background: var(--green-bg); color: var(--green-text); }
+.score-badge.review { background: rgba(180,83,9,0.12); color: var(--amber-text); }
+
+/* Smooth theme transition */
+body, header, footer, .hero-metric, .bento-card, .data-table, .audit-panel,
+.hash-field, .integrity-pane, .hero-split, .nav-pill, .btn, .table-row {
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+.status-badge {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: right;
+  color: var(--green-text);
+}
+.status-badge.review { color: var(--amber-text); }
+
+/* ──────────────── HERO IMAGE SPLIT ──────────────── */
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--outline-dim);
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-top: 0;
+}
+.hero-img-pane {
+  background: var(--surface-low);
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  position: relative;
+}
+.hero-img-pane img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  filter: grayscale(0.3);
+}
+.hero-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--surface-dim) 80%, transparent) 0%, transparent 60%);
+}
+.integrity-pane {
+  background: var(--surface-mid);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+.integrity-label {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+}
+.integrity-score {
+  font-family: 'Geist', monospace;
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--on-surface);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.integrity-score span { color: var(--green-text); }
+.hash-field {
+  background: var(--surface-low);
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r);
+  padding: 12px 16px;
+}
+.hash-label {
+  font-family: 'Geist', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+  margin-bottom: 6px;
+}
+.hash-value {
+  font-family: 'Geist', monospace;
+  font-size: 11px;
+  color: var(--primary);
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+/* ──────────────── BENTO ──────────────── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--outline-dim);
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.bento-card {
+  background: var(--surface-mid);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background 0.2s;
+  cursor: default;
+}
+.bento-card:hover { background: var(--surface-high); }
+.bento-card.dark {
+  background: var(--surface-dim);
+  color: var(--on-surface);
+  border: 1px solid var(--outline-dim);
+}
+.bento-card.dark:hover { filter: brightness(1.05); }
+.bento-icon {
+  font-size: 28px;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+.bento-card.dark .bento-icon { color: var(--primary); }
+.bento-title {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin-bottom: 12px;
+}
+.bento-body {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--on-surface-dim);
+  margin-bottom: 20px;
+}
+.bento-tags { display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--outline-dim); padding-top: 20px; }
+.bento-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+}
+.bento-tag::before {
+  content: '';
+  display: block;
+  width: 4px; height: 4px;
+  background: var(--on-surface-dim);
+  border-radius: 50%;
+}
+.zk-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  border-radius: var(--r);
+  padding: 10px 14px;
+  font-family: 'Geist', monospace;
+  font-size: 11px;
+  color: var(--green-text);
+  margin-top: auto;
+}
+.compliance-bar-wrap { background: var(--surface-highest); height: 4px; border-radius: 2px; overflow: hidden; margin: 12px 0; }
+.compliance-bar { height: 100%; background: var(--primary); width: 0; border-radius: 2px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+
+/* ──────────────── INTERACTIVE AUDIT PANEL ──────────────── */
+.audit-panel {
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.audit-header {
+  background: var(--surface-low);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--outline-dim);
+}
+.audit-title {
+  font-family: 'Geist', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+}
+.audit-run-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  background: var(--primary);
+  color: var(--on-primary);
+  border-radius: var(--r);
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+.audit-run-btn:hover { background: var(--secondary); }
+.audit-run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.audit-log {
+  background: var(--surface-dim);
+  padding: 20px 24px;
+  min-height: 180px;
+  font-family: 'Geist', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.log-line { color: var(--on-surface-dim); opacity: 0; animation: logIn 0.3s ease forwards; }
+.log-line.ok { color: var(--green-text); }
+.log-line.warn { color: var(--amber-text); }
+.log-line.info { color: var(--primary); }
+@keyframes logIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ──────────────── FOOTER ──────────────── */
+footer {
+  background: var(--surface-low);
+  border-top: 1px solid var(--outline-dim);
+  padding: 40px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.footer-brand .nav-equality { font-size: 20px; }
+.footer-brand .nav-index { font-size: 8px; letter-spacing: 0.35em; }
+
+.footer-copy {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--on-surface-dim);
+  margin-top: 4px;
+}
+.footer-links {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--primary); }
+
+/* ──────────────── SCORE DECOMPOSITION ──────────────── */
+.score-decomp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.score-decomp-label {
+  font-family: 'Geist', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+}
+.score-decomp-value {
+  font-family: 'Geist', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--on-surface);
+  letter-spacing: -0.01em;
+}
+
+/* ──────────────── THEME TOGGLE ──────────────── */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px; height: 34px;
+  border-radius: var(--r);
+  border: 1px solid var(--outline-dim);
+  color: var(--on-surface-dim);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Geist', monospace;
+}
+.theme-toggle:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+
+/* ──────────────── HERO MONITOR PANEL ──────────────── */
+.hero-monitor {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--outline-dim);
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.monitor-left {
+  background: var(--surface-mid);
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+}
+.monitor-escore-label {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+  margin-bottom: 8px;
+}
+.monitor-escore-display {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  line-height: 1;
+}
+.monitor-escore-e {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--on-surface-dim);
+}
+.monitor-escore-num {
+  font-family: 'Geist', monospace;
+  font-size: 72px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--on-surface);
+  line-height: 1;
+}
+.monitor-escore-sub {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--on-surface-dim);
+  margin-top: 8px;
+}
+.monitor-score-bar-wrap {
+  margin-top: 16px;
+}
+.monitor-score-bar-track {
+  height: 5px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--green-text) 0%, #c8871a 55%, #b03020 100%);
+  position: relative;
+}
+.monitor-score-needle {
+  position: absolute;
+  top: -5px;
+  left: 61.8%; /* e640 → (640-300)/550 ≈ 61.8% from lower-risk left */
+  width: 2px;
+  height: 15px;
+  background: var(--on-surface);
+  border-radius: 1px;
+  transform: translateX(-50%);
+}
+.monitor-score-bar-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+.monitor-score-bar-label {
+  font-family: 'Geist', monospace;
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  color: var(--on-surface-dim);
+}
+.monitor-meta {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  border-top: 1px solid var(--outline-dim);
+}
+.monitor-meta-item { display: flex; flex-direction: column; gap: 3px; }
+.monitor-meta-lbl {
+  font-family: 'Geist', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+}
+.monitor-meta-val {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--on-surface);
+}
+.monitor-meta-val.green { color: var(--green-text); }
+
+/* Right: animated monitoring canvas */
+.monitor-right {
+  background: var(--surface-dim);
+  position: relative;
+  overflow: hidden;
+  min-height: 340px;
+}
+.monitor-canvas-label {
+  position: absolute;
+  top: 16px; left: 20px;
+  font-family: 'Geist', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.monitor-canvas-label::before {
+  content: '';
+  display: block;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--green-text);
+  animation: blink 1.4s ease infinite;
+}
+#monitorCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.monitor-readout {
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  z-index: 2;
+}
+.monitor-readout-val {
+  font-family: 'Geist', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+  opacity: 0.7;
+}
+
+/* ──────────────── UTILS ──────────────── */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+@media (max-width: 768px) {
+  .hero-metrics { grid-template-columns: 1fr; }
+  .bento-grid { grid-template-columns: 1fr; }
+  .hero-split { grid-template-columns: 1fr; }
+  nav { display: none; }
+  .table-head, .table-row { grid-template-columns: 2fr 1fr 1fr; }
+  .table-head .th:nth-child(n+4),
+  .table-row > *:nth-child(n+4) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     HEADER
+══════════════════════════════════ -->
+<header id="mainHeader" class="visible">
+  <div class="nav-wordmark">
+    <span class="nav-equality">eQuality</span>
+    <span class="nav-index">Index</span>
+  </div>
+
+  <nav aria-label="Primary navigation">
+    <a href="#" class="active">Workflow Engine</a>
+    <a href="#">Underwriting</a>
+    <a href="#">Claims & Audit</a>
+    <a href="#">Methodology</a>
+  </nav>
+
+  <div class="nav-actions">
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">
+      <span class="material-symbols-outlined" id="themeIcon" style="font-size:18px;">light_mode</span>
+    </button>
+    <button class="nav-pill primary">Request Access</button>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════
+     MAIN
+══════════════════════════════════ -->
+<main id="mainContent">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-bg-glow"></div>
+    <div class="container" style="position:relative;z-index:1;">
+
+      <h1 class="hero-headline">
+        Environmental risk scoring<br>for <em>institutional capital</em>
+      </h1>
+      <p class="hero-sub">
+        A standardized, property-level environmental risk signal designed for insurance underwriting, commercial lending, and portfolio risk management.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn btn-ghost">
+          <span class="material-symbols-outlined" style="font-size:15px">description</span>
+          View Methodology
+        </button>
+        <button class="btn btn-primary">
+          <span class="material-symbols-outlined" style="font-size:15px">analytics</span>
+          Get Equality Score
+        </button>
+      </div>
+
+      <!-- Monitor Panel -->
+      <div class="hero-monitor">
+
+        <!-- Left: static eScore sample -->
+        <div class="monitor-left">
+          <div>
+            <div class="monitor-escore-label">Sample eScore</div>
+            <div class="monitor-escore-display">
+              <span class="monitor-escore-e">e</span>
+              <span class="monitor-escore-num">640</span>
+            </div>
+            <div class="monitor-escore-sub">Property score reflects site-level environmental condition</div>
+            <div class="monitor-score-bar-wrap">
+              <div class="monitor-score-bar-track">
+                <div class="monitor-score-needle"></div>
+              </div>
+              <div class="monitor-score-bar-labels">
+                <span class="monitor-score-bar-label">Lower risk</span>
+                <span class="monitor-score-bar-label">Higher risk</span>
+              </div>
+            </div>
+          </div>
+          <div class="monitor-meta">
+            <div class="monitor-meta-item">
+              <span class="monitor-meta-lbl">Tier</span>
+              <span class="monitor-meta-val">Tier 2 — Standard</span>
+            </div>
+            <div class="monitor-meta-item">
+              <span class="monitor-meta-lbl">Confidence</span>
+              <span class="monitor-meta-val green">HIGH</span>
+            </div>
+            <div class="monitor-meta-item">
+              <span class="monitor-meta-lbl">Action</span>
+              <span class="monitor-meta-val">Proceed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: live monitoring animation -->
+        <div class="monitor-right">
+          <div class="monitor-canvas-label">Live Environmental Monitor</div>
+          <canvas id="monitorCanvas"></canvas>
+          <div class="monitor-readout">
+            <span class="monitor-readout-val" id="readoutA">EPA · 0 records</span>
+            <span class="monitor-readout-val" id="readoutB">State DB · synced</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" style="padding-top:72px;padding-bottom:72px;">
+    <div class="container">
+      <div class="section-label">Process</div>
+      <h2 class="section-title">From fragmented regulatory data<br>to a single, machine-readable risk signal</h2>
+
+      <div class="hero-split" style="grid-template-columns:1fr 1fr 1fr;">
+
+        <div class="integrity-pane" style="border-right:1px solid var(--outline-dim);">
+          <div>
+            <div class="integrity-label" style="font-size:10px;letter-spacing:0.18em;color:var(--green-text);margin-bottom:16px;">01 · Aggregate</div>
+            <div style="font-family:'Public Sans',sans-serif;font-size:18px;font-weight:600;color:var(--on-surface);margin-bottom:12px;line-height:1.3;">Regulatory data integration</div>
+            <p style="font-family:'Hanken Grotesk',sans-serif;font-size:13px;line-height:1.7;color:var(--on-surface-dim);">Continuous ingestion from federal and state environmental databases, normalized to the parcel level and updated as records change.</p>
+          </div>
+        </div>
+
+        <div class="integrity-pane" style="border-right:1px solid var(--outline-dim);">
+          <div>
+            <div class="integrity-label" style="font-size:10px;letter-spacing:0.18em;color:var(--green-text);margin-bottom:16px;">02 · Score</div>
+            <div style="font-family:'Public Sans',sans-serif;font-size:18px;font-weight:600;color:var(--on-surface);margin-bottom:12px;line-height:1.3;">Property-level scoring</div>
+            <p style="font-family:'Hanken Grotesk',sans-serif;font-size:13px;line-height:1.7;color:var(--on-surface-dim);">A structured scoring methodology that translates fragmented environmental data into a standardized, property-level risk signal.</p>
+          </div>
+        </div>
+
+        <div class="integrity-pane">
+          <div>
+            <div class="integrity-label" style="font-size:10px;letter-spacing:0.18em;color:var(--green-text);margin-bottom:16px;">03 · Deliver</div>
+            <div style="font-family:'Public Sans',sans-serif;font-size:18px;font-weight:600;color:var(--on-surface);margin-bottom:12px;line-height:1.3;">Workflow integration</div>
+            <p style="font-family:'Hanken Grotesk',sans-serif;font-size:13px;line-height:1.7;color:var(--on-surface-dim);">Scores are delivered via API into underwriting platforms, loan origination systems, and portfolio management tools.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILT FOR INSTITUTIONAL WORKFLOWS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-label">Use Cases</div>
+      <h2 class="section-title">Built for institutional workflows</h2>
+      <p style="font-family:'Hanken Grotesk',sans-serif;font-size:16px;color:var(--on-surface-dim);max-width:540px;margin-bottom:40px;line-height:1.6;">Designed to integrate where environmental risk decisions are already being made.</p>
+
+      <div class="data-table" role="table">
+        <div class="table-head" role="row">
+          <div class="th" style="grid-column:span 2;">Workflow</div>
+          <div class="th" style="text-align:left;grid-column:span 3;">Description</div>
+        </div>
+
+        <div class="table-row" style="grid-template-columns:2fr 3fr;gap:24px;" onclick="selectRow(0)" id="row-0" role="row">
+          <div>
+            <div class="asset-name">Underwriting Triage</div>
+            <div class="asset-id">Insurance · Risk Routing</div>
+          </div>
+          <div style="font-family:'Hanken Grotesk',sans-serif;font-size:13px;color:var(--on-surface-dim);line-height:1.6;display:flex;align-items:center;">
+            Score-based routing replaces manual review for routine environmental submissions.
+          </div>
+        </div>
+
+        <div class="table-row" style="grid-template-columns:2fr 3fr;gap:24px;" onclick="selectRow(1)" id="row-1" role="row">
+          <div>
+            <div class="asset-name">Actuarial Integration</div>
+            <div class="asset-id">Insurance · Pricing Variable</div>
+          </div>
+          <div style="font-family:'Hanken Grotesk',sans-serif;font-size:13px;color:var(--on-surface-dim);line-height:1.6;display:flex;align-items:center;">
+            A site-level rating variable that supplements class-based pricing with property-specific data.
+          </div>
+        </div>
+
+        <div class="table-row" style="grid-template-columns:2fr 3fr;gap:24px;" onclick="selectRow(2)" id="row-2" role="row">
+          <div>
+            <div class="asset-name">Lender Due Diligence</div>
+            <div class="asset-id">Commercial Lending · Commitment</div>
+          </div>
+          <div style="font-family:'Hanken Grotesk',sans-serif;font-size:13px;color:var(--on-surface-dim);line-height:1.6;display:flex;align-items:center;">
+            Machine-readable environmental signal at loan commitment, with ongoing portfolio monitoring.
+          </div>
+        </div>
+
+        <div class="table-row" style="grid-template-columns:2fr 3fr;gap:24px;border-bottom:none;" onclick="selectRow(3)" id="row-3" role="row">
+          <div>
+            <div class="asset-name">Portfolio Risk Management</div>
+            <div class="asset-id">Reinsurance · Capital Planning</div>
+          </div>
+          <div style="font-family:'Hanken Grotesk',sans-serif;font-size:13px;color:var(--on-surface-dim);line-height:1.6;display:flex;align-items:center;">
+            Aggregate environmental exposure across a book of business for reinsurance and capital planning.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORM BENTO -->
+  <section class="section">
+    <div class="container">
+      <div class="section-label">Platform</div>
+      <h2 class="section-title">eQuality — Environmental Risk Intelligence</h2>
+
+      <div class="bento-grid">
+        <!-- Federal + State Data -->
+        <div class="bento-card">
+          <div>
+            <div class="bento-icon"><span class="material-symbols-outlined">travel_explore</span></div>
+            <div class="bento-title">Regulatory Data Integration</div>
+            <p class="bento-body">Continuous ingestion from federal and state environmental databases, normalized to the parcel level and updated as records change.</p>
+          </div>
+          <div class="bento-tags">
+            <div class="bento-tag">Federal database ingestion</div>
+            <div class="bento-tag">Parcel-level normalization</div>
+          </div>
+        </div>
+
+        <!-- eScore (dark) -->
+        <div class="bento-card dark">
+          <div>
+            <div class="bento-icon"><span class="material-symbols-outlined">analytics</span></div>
+            <div class="bento-title">Standardized eScore Signal</div>
+            <p class="bento-body" style="color:var(--on-surface-dim);">A structured scoring methodology that translates fragmented environmental data into a single, property-level risk signal — machine-readable and API-delivered.</p>
+          </div>
+          <div class="zk-chip">
+            <span style="font-family:'Public Sans',sans-serif;font-style:normal;font-size:13px;font-weight:600;margin-right:4px;">e</span>
+            <span style="font-family:'Geist',monospace;font-size:15px;font-weight:700;">640</span>
+            <span style="font-family:'Geist',monospace;font-size:10px;opacity:0.7;margin-left:6px;letter-spacing:0.05em;">Sample Output</span>
+          </div>
+        </div>
+
+        <!-- API Delivery -->
+        <div class="bento-card">
+          <div>
+            <div class="bento-icon"><span class="material-symbols-outlined">api</span></div>
+            <div class="bento-title">API Workflow Delivery</div>
+            <p class="bento-body">Scores are delivered via API into underwriting platforms, loan origination systems, and portfolio management tools — where environmental risk decisions are already being made.</p>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="bento-tag" style="border-top:none;padding-top:0;">ERIS Integration</span>
+              <span style="font-family:'Geist',monospace;font-size:10px;color:var(--primary);letter-spacing:0.1em;">V1 Formula</span>
+            </div>
+            <div class="compliance-bar-wrap"><div class="compliance-bar" id="complianceBar"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="nav-wordmark">
+      <span class="nav-equality">eQuality</span>
+      <span class="nav-index">Index</span>
+    </div>
+    <div class="footer-copy">© 2026 IEIT · eQuality v3.2 · Insurance Workflow Platform</div>
+  </div>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Regulatory Disclosure</a>
+    <a href="#">Contact Support</a>
+  </div>
+</footer>
+
+
+<script>
+/* ──────────── THEME TOGGLE ──────────── */
+function toggleTheme() {
+  const root = document.documentElement;
+  const icon = document.getElementById('themeIcon');
+  const isLight = root.getAttribute('data-theme') === 'light';
+  if (isLight) {
+    root.removeAttribute('data-theme');
+    icon.textContent = 'light_mode';
+  } else {
+    root.setAttribute('data-theme', 'light');
+    icon.textContent = 'dark_mode';
+  }
+}
+if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+  document.documentElement.setAttribute('data-theme', 'light');
+  document.getElementById('themeIcon').textContent = 'dark_mode';
+}
+
+/* ──────────── MONITORING CANVAS ──────────── */
+(function() {
+  const canvas = document.getElementById('monitorCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  // Three independent waveform channels
+  const channels = [
+    { points: [], speed: 1.2, freq: 0.018, amp: 28, yFrac: 0.28, color: null, label: 'EPA_FEED' },
+    { points: [], speed: 0.9, freq: 0.026, amp: 18, yFrac: 0.56, color: null, label: 'STATE_DB' },
+    { points: [], speed: 1.5, freq: 0.014, amp: 22, yFrac: 0.80, color: null, label: 'PARCEL_IDX' },
+  ];
+
+  // Sparse event dots that occasionally flash on the traces
+  const events = [];
+  let tick = 0;
+  let epaCt = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width  = rect.width  * window.devicePixelRatio;
+    canvas.height = rect.height * window.devicePixelRatio;
+    canvas.style.width  = rect.width  + 'px';
+    canvas.style.height = rect.height + 'px';
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    channels.forEach(c => { c.points = []; });
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function cssVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
+  function getColors() {
+    return {
+      ch0: cssVar('--primary'),
+      ch1: cssVar('--green-text'),
+      ch2: cssVar('--on-surface-dim'),
+      grid: cssVar('--outline-dim'),
+      text: cssVar('--on-surface-dim'),
+    };
+  }
+
+  function drawFrame() {
+    const W = canvas.width  / window.devicePixelRatio;
+    const H = canvas.height / window.devicePixelRatio;
+    const col = getColors();
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Subtle dot grid
+    ctx.fillStyle = col.grid;
+    for (let x = 20; x < W; x += 32) {
+      for (let y = 20; y < H; y += 32) {
+        ctx.globalAlpha = 0.25;
+        ctx.beginPath();
+        ctx.arc(x, y, 0.8, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    ctx.globalAlpha = 1;
+
+    // Horizontal channel baselines
+    const chColors = [col.ch0, col.ch1, col.ch2];
+    channels.forEach((ch, i) => {
+      const baseY = H * ch.yFrac;
+
+      // Baseline dim rule
+      ctx.strokeStyle = chColors[i];
+      ctx.globalAlpha = 0.1;
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 6]);
+      ctx.beginPath();
+      ctx.moveTo(0, baseY);
+      ctx.lineTo(W, baseY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.globalAlpha = 1;
+
+      // Channel label at left edge
+      ctx.font = `700 9px 'Geist', monospace`;
+      ctx.fillStyle = chColors[i];
+      ctx.globalAlpha = 0.4;
+      ctx.textBaseline = 'middle';
+      ctx.fillText(ch.label, 10, baseY - 12);
+      ctx.globalAlpha = 1;
+
+      // Advance waveform points
+      const newY = baseY + Math.sin(tick * ch.freq + i * 2.1) * ch.amp
+                         + Math.sin(tick * ch.freq * 2.3 + i) * (ch.amp * 0.3);
+      ch.points.push({ x: W, y: newY });
+
+      // Scroll all points left
+      const scrollAmt = ch.speed;
+      ch.points.forEach(p => p.x -= scrollAmt);
+      while (ch.points.length > 0 && ch.points[0].x < -2) ch.points.shift();
+
+      if (ch.points.length < 2) return;
+
+      // Glow pass
+      ctx.save();
+      ctx.strokeStyle = chColors[i];
+      ctx.lineWidth = 3;
+      ctx.globalAlpha = 0.08;
+      ctx.shadowColor = chColors[i];
+      ctx.shadowBlur = 12;
+      ctx.beginPath();
+      ch.points.forEach((p, idx) => idx === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+      ctx.stroke();
+      ctx.restore();
+
+      // Main line
+      ctx.save();
+      ctx.strokeStyle = chColors[i];
+      ctx.lineWidth = 1.5;
+      ctx.globalAlpha = 0.75;
+      ctx.lineJoin = 'round';
+      ctx.beginPath();
+      ch.points.forEach((p, idx) => idx === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+      ctx.stroke();
+      ctx.restore();
+
+      // Leading dot
+      const last = ch.points[ch.points.length - 1];
+      ctx.beginPath();
+      ctx.arc(last.x, last.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = chColors[i];
+      ctx.globalAlpha = 0.9;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+
+    // Random event blips
+    if (Math.random() < 0.015) {
+      const ci = Math.floor(Math.random() * 3);
+      const ch = channels[ci];
+      const last = ch.points[ch.points.length - 1];
+      if (last) {
+        events.push({ x: last.x, y: last.y, r: 4, life: 1, ci });
+        epaCt = Math.min(epaCt + Math.floor(Math.random() * 80 + 20), 999999);
+        const ra = document.getElementById('readoutA');
+        if (ra) ra.textContent = `EPA · ${epaCt.toLocaleString()} records`;
+      }
+    }
+
+    // Draw and decay events
+    events.forEach(ev => {
+      ctx.beginPath();
+      ctx.arc(ev.x, ev.y, ev.r * (2 - ev.life), 0, Math.PI * 2);
+      ctx.strokeStyle = chColors[ev.ci];
+      ctx.lineWidth = 1;
+      ctx.globalAlpha = ev.life * 0.7;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+      ev.x -= channels[ev.ci].speed;
+      ev.life -= 0.025;
+    });
+    for (let i = events.length - 1; i >= 0; i--) {
+      if (events[i].life <= 0) events.splice(i, 1);
+    }
+
+    // Vertical scan sweep — moves right across canvas, resets
+    const sweepPeriod = 240; // frames for full sweep
+    const sweepX = (tick % sweepPeriod) / sweepPeriod * W;
+    const sweepGrad = ctx.createLinearGradient(sweepX - 40, 0, sweepX + 4, 0);
+    sweepGrad.addColorStop(0, 'transparent');
+    sweepGrad.addColorStop(1, col.ch1 + '18');
+    ctx.fillStyle = sweepGrad;
+    ctx.globalAlpha = 0.6;
+    ctx.fillRect(sweepX - 40, 0, 44, H);
+    ctx.globalAlpha = 1;
+    // Sweep leading edge line
+    ctx.strokeStyle = col.ch1;
+    ctx.lineWidth = 1;
+    ctx.globalAlpha = 0.18;
+    ctx.beginPath();
+    ctx.moveTo(sweepX, 0);
+    ctx.lineTo(sweepX, H);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    tick++;
+    requestAnimationFrame(drawFrame);
+  }
+
+  drawFrame();
+})();
+
+/* ──────────── ROW SELECT ──────────── */
+function selectRow(i) {
+  document.querySelectorAll('.table-row').forEach(r => r.classList.remove('active'));
+  const row = document.getElementById(`row-${i}`);
+  if (row) row.classList.add('active');
+}
+
+/* ──────────── AUDIT CONSOLE ──────────── */
+const AUDIT_LINES = [
+  { text: '> POST /v1/score · eQuality API · EQ-V3.2-2026-03', cls: 'info', delay: 0 },
+  { text: '> Authenticating institutional API key…',            cls: '',     delay: 400 },
+  { text: '  ✓ Key valid · ERIS Integrated · V1 Formula',       cls: 'ok',   delay: 900 },
+  { text: '> Resolving parcel to environmental records…',       cls: '',     delay: 1300 },
+  { text: '  ✓ Federal records matched · State normalized',     cls: 'ok',   delay: 1800 },
+  { text: '> Running property-level scoring model…',            cls: 'info', delay: 2300 },
+  { text: '  ✓ Environmental condition assessed',               cls: 'ok',   delay: 2800 },
+  { text: '  {',                                                cls: '',     delay: 3300 },
+  { text: '    "escore": "e640",',                              cls: 'info', delay: 3500 },
+  { text: '    "tier": "Tier 2 — Standard",',                   cls: '',     delay: 3700 },
+  { text: '    "confidence": "HIGH",',                          cls: 'ok',   delay: 3900 },
+  { text: '    "action": "Proceed",',                           cls: 'ok',   delay: 4100 },
+  { text: '    "version": "EQ-V3.2-2026-03"',                   cls: '',     delay: 4300 },
+  { text: '  }',                                                cls: '',     delay: 4500 },
+  { text: '> ── Response delivered · eQuality v3.2 ──',         cls: 'info', delay: 4900 },
+];
+
+let auditRunning = false;
+function runAudit() {
+  if (auditRunning) return;
+  auditRunning = true;
+  const btn = document.getElementById('auditBtn');
+  const log = document.getElementById('auditLog');
+  btn.disabled = true;
+  btn.textContent = 'Running…';
+  log.innerHTML = '';
+  AUDIT_LINES.forEach(({ text, cls, delay }) => {
+    setTimeout(() => {
+      const div = document.createElement('div');
+      div.className = 'log-line' + (cls ? ' ' + cls : '');
+      div.textContent = text;
+      log.appendChild(div);
+      log.scrollTop = log.scrollHeight;
+      if (delay >= 4900) {
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:13px">send</span> Simulate Request';
+          auditRunning = false;
+        }, 600);
+      }
+    }, delay);
+  });
+}
+
+/* ──────────── COMPLIANCE BAR ──────────── */
+const compBar = document.getElementById('complianceBar');
+if (compBar) {
+  compBar.style.width = '0';
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) { compBar.style.width = '88%'; obs.disconnect(); }
+  }, { threshold: 0.3 });
+  obs.observe(compBar);
+}
+</script>
+</body>
+</html>
