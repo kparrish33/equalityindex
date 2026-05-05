@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Methodology | eQuality INDEX</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;700&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<style>
+/* ──────────────── DESIGN TOKENS: DARK MODE ──────────────── */
+:root {
+  color-scheme: dark;
+  --surface:           #101415;
+  --surface-dim:       #0b0f10;
+  --surface-low:       #191c1e;
+  --surface-mid:       #1d2022;
+  --surface-high:      #272a2c;
+  --surface-highest:   #323537;
+  --on-surface:        #e0e3e5;
+  --on-surface-dim:    #909097;
+  --outline:           #909097;
+  --outline-dim:       #2e3133;
+  --primary:           #bec6e0;
+  --on-primary:        #1d2637;
+  --secondary:         #9aafd4;
+  --wordmark-color:    #e0e3e5;
+  --wordmark-sub:      #bec6e0;
+  --green:             #0d6b42;
+  --green-text:        #2aab6e;
+  --green-bg:          rgba(13,107,66,0.18);
+  --green-border:      rgba(13,107,66,0.4);
+  --amber-text:        #f0b429;
+  --intro-grid:        rgba(190,198,224,0.04);
+  --hero-glow:         rgba(13,107,66,0.07);
+  --font-head:  'Public Sans', sans-serif;
+  --font-body:  'Hanken Grotesk', sans-serif;
+  --font-mono:  'Geist', monospace;
+  --r-sm: 0.25rem; --r: 0.5rem; --r-md: 0.75rem; --r-lg: 1rem;
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --surface:           #f8fafc;
+  --surface-dim:       #e9edf2;
+  --surface-low:       #f0f4f8;
+  --surface-mid:       #ffffff;
+  --surface-high:      #e4eaf2;
+  --surface-highest:   #d6dde8;
+  --on-surface:        #0f172a;
+  --on-surface-dim:    #475569;
+  --outline:           #94a3b8;
+  --outline-dim:       #cbd5e1;
+  --primary:           #1e3a6e;
+  --on-primary:        #ffffff;
+  --secondary:         #2d4f8e;
+  --wordmark-color:    #0f172a;
+  --wordmark-sub:      #1e3a6e;
+  --green:             #064e3b;
+  --green-text:        #065f46;
+  --green-bg:          rgba(6,78,59,0.08);
+  --green-border:      rgba(6,78,59,0.25);
+  --amber-text:        #b45309;
+  --intro-grid:        rgba(30,58,110,0.04);
+  --hero-glow:         rgba(30,58,110,0.06);
+}
+
+/* ──────────────── RESET + FONT ENFORCEMENT ──────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+html, body, input, textarea, select { font-family: 'Hanken Grotesk', sans-serif; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Public Sans', sans-serif; }
+button, [role="button"] { font-family: 'Geist', monospace; }
+code, pre, kbd, samp { font-family: 'Geist', monospace; }
+
+body {
+  background: var(--surface);
+  color: var(--on-surface);
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: 'Geist', monospace; color: inherit; }
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+/* ──────────────── NAV ──────────────── */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--outline-dim);
+  padding: 0 32px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+.nav-wordmark { display: flex; flex-direction: column; line-height: 1; gap: 2px; }
+.nav-equality {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--wordmark-color);
+  transition: color 0.3s;
+  line-height: 1;
+}
+.nav-index {
+  font-family: 'Geist', monospace;
+  font-size: 8px;
+  letter-spacing: 0.35em;
+  color: var(--wordmark-sub);
+  text-transform: uppercase;
+  transition: color 0.3s;
+  line-height: 1;
+}
+nav { display: flex; align-items: center; gap: 32px; }
+nav a {
+  font-family: 'Geist', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+  transition: color 0.2s;
+}
+nav a:hover { color: var(--on-surface); }
+nav a.active { color: var(--primary); }
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+.nav-pill {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  border: 1px solid var(--outline-dim);
+  color: var(--on-surface-dim);
+  transition: all 0.2s;
+}
+.nav-pill:hover { border-color: var(--primary); color: var(--primary); }
+.nav-pill.primary {
+  background: var(--primary);
+  color: var(--on-primary);
+  border-color: var(--primary);
+}
+.nav-pill.primary:hover { background: var(--secondary); }
+.theme-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px;
+  border-radius: var(--r);
+  border: 1px solid var(--outline-dim);
+  color: var(--on-surface-dim);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Geist', monospace;
+}
+.theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ──────────────── MARQUEE ──────────────── */
+.marquee-section {
+  border-bottom: 1px solid var(--outline-dim);
+  padding: 18px 0;
+  overflow: hidden;
+  background: var(--surface-low);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 30s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 40px;
+  white-space: nowrap;
+  font-family: 'Geist', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+  border-right: 1px solid var(--outline-dim);
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.marquee-item:hover { opacity: 1; color: var(--primary); }
+.marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green-text); flex-shrink: 0; }
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ──────────────── LAYOUT ──────────────── */
+.container { max-width: 1440px; margin: 0 auto; padding: 0 32px; }
+
+/* ──────────────── PAGE HERO ──────────────── */
+.page-hero {
+  padding: 80px 0 72px;
+  border-bottom: 1px solid var(--outline-dim);
+  position: relative;
+  overflow: hidden;
+}
+.page-hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--intro-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--intro-grid) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+}
+.page-hero-glow {
+  position: absolute;
+  top: -200px; right: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--hero-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+.page-hero-inner {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 48px;
+}
+.page-label {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green-text);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.page-label::before {
+  content: '';
+  display: block;
+  width: 20px; height: 1px;
+  background: var(--green-text);
+}
+.page-headline {
+  font-family: 'Public Sans', sans-serif;
+  font-size: clamp(36px, 4.5vw, 60px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--on-surface);
+  max-width: 680px;
+  margin-bottom: 24px;
+}
+.page-headline em { font-style: normal; color: var(--primary); }
+.page-sub {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--on-surface-dim);
+  max-width: 560px;
+}
+.page-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.meta-chip {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid var(--outline-dim);
+  border-radius: 9999px;
+  color: var(--on-surface-dim);
+  white-space: nowrap;
+}
+.meta-chip.green {
+  border-color: var(--green-border);
+  color: var(--green-text);
+  background: var(--green-bg);
+}
+
+/* ──────────────── TWO-COL CONTENT ──────────────── */
+.content-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 0;
+  align-items: start;
+  padding: 64px 0;
+  border-bottom: 1px solid var(--outline-dim);
+}
+.sidebar {
+  position: sticky;
+  top: 80px;
+  padding-right: 40px;
+}
+.sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+.sidebar-link {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+  padding: 8px 0;
+  border-left: 2px solid transparent;
+  padding-left: 12px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.sidebar-link:hover { color: var(--on-surface); border-left-color: var(--outline-dim); }
+.sidebar-link.active { color: var(--primary); border-left-color: var(--primary); }
+.sidebar-group-label {
+  font-family: 'Geist', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+  opacity: 0.5;
+  padding: 16px 0 6px 12px;
+}
+
+/* ──────────────── CONTENT SECTIONS ──────────────── */
+.content { display: flex; flex-direction: column; gap: 72px; }
+
+.content-section { scroll-margin-top: 80px; }
+
+.section-eyebrow {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green-text);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-eyebrow-num {
+  font-size: 9px;
+  opacity: 0.6;
+}
+.content-title {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--on-surface);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+.content-body {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--on-surface-dim);
+}
+.content-body p { margin-bottom: 16px; }
+.content-body p:last-child { margin-bottom: 0; }
+
+/* Principle cards */
+.principle-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--outline-dim);
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-top: 28px;
+}
+.principle-card {
+  background: var(--surface-mid);
+  padding: 24px 28px;
+  transition: background 0.2s;
+}
+.principle-card:hover { background: var(--surface-high); }
+.principle-num {
+  font-family: 'Geist', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+  opacity: 0.5;
+  margin-bottom: 10px;
+}
+.principle-title {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.principle-body {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--on-surface-dim);
+}
+
+/* Domain cards */
+.domain-list { display: flex; flex-direction: column; gap: 1px; margin-top: 28px; }
+.domain-item {
+  background: var(--surface-mid);
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r);
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 20px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.domain-item:hover { background: var(--surface-high); border-color: var(--primary); }
+.domain-code {
+  font-family: 'Geist', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+  background: var(--surface-low);
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r-sm);
+  padding: 4px 10px;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.domain-title {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin-bottom: 4px;
+}
+.domain-desc {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--on-surface-dim);
+}
+.domain-weight {
+  font-family: 'Geist', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--on-surface-dim);
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+/* Score output flow */
+.score-flow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--outline-dim);
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-top: 28px;
+}
+.flow-step {
+  background: var(--surface-mid);
+  padding: 24px 24px 20px;
+  position: relative;
+  transition: background 0.2s;
+}
+.flow-step:hover { background: var(--surface-high); }
+.flow-step-num {
+  font-family: 'Geist', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+  opacity: 0.5;
+  margin-bottom: 12px;
+}
+.flow-step-title {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin-bottom: 8px;
+}
+.flow-step-body {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--on-surface-dim);
+}
+
+/* Tier table */
+.tier-table {
+  width: 100%;
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-top: 28px;
+}
+.tier-head {
+  display: grid;
+  grid-template-columns: 120px 1fr 130px 130px;
+  padding: 10px 20px;
+  background: var(--surface-low);
+  border-bottom: 1px solid var(--outline-dim);
+}
+.tier-th {
+  font-family: 'Geist', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+}
+.tier-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 130px 130px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--outline-dim);
+  align-items: center;
+  transition: background 0.15s;
+}
+.tier-row:last-child { border-bottom: none; }
+.tier-row:hover { background: var(--surface-low); }
+.tier-score {
+  font-family: 'Geist', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--on-surface);
+  letter-spacing: -0.01em;
+}
+.tier-name {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--on-surface);
+}
+.tier-class {
+  font-family: 'Geist', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--on-surface-dim);
+}
+.tier-action {
+  font-family: 'Geist', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+.tier-action.proceed { color: var(--green-text); }
+.tier-action.reprice { color: #e07820; }
+.tier-action.escalate { color: var(--amber-text); }
+.tier-action.decline { color: #c0392b; }
+
+/* Overlay cards */
+.overlay-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 28px;
+}
+.overlay-card {
+  background: var(--surface-mid);
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.overlay-card:hover { background: var(--surface-high); border-color: var(--primary); }
+.overlay-icon {
+  font-size: 22px;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+.overlay-title {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin-bottom: 8px;
+}
+.overlay-body {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--on-surface-dim);
+}
+
+/* Governance list */
+.governance-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 28px;
+}
+.governance-rule {
+  background: var(--surface-mid);
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r);
+  padding: 18px 22px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: background 0.2s;
+}
+.governance-rule:hover { background: var(--surface-high); }
+.rule-bullet {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green-text);
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.rule-text {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--on-surface-dim);
+}
+.rule-text strong {
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+/* Standards */
+.standards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 28px;
+}
+.standard-card {
+  background: var(--surface-mid);
+  border: 1px solid var(--outline-dim);
+  border-radius: var(--r-lg);
+  padding: 20px 24px;
+  transition: background 0.2s;
+}
+.standard-card:hover { background: var(--surface-high); }
+.standard-name {
+  font-family: 'Geist', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+.standard-desc {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--on-surface-dim);
+}
+
+/* Callout box */
+.callout {
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  border-radius: var(--r-lg);
+  padding: 20px 24px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-top: 24px;
+}
+.callout-icon { color: var(--green-text); font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.callout-text {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--on-surface-dim);
+}
+.callout-text strong { color: var(--green-text); font-weight: 600; }
+
+/* divider */
+hr.section-divider {
+  border: none;
+  border-top: 1px solid var(--outline-dim);
+  margin: 0;
+}
+
+/* ──────────────── SCROLL REVEAL ──────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.revealed { opacity: 1; transform: none; }
+
+/* ──────────────── FOOTER ──────────────── */
+footer {
+  background: var(--surface-low);
+  border-top: 1px solid var(--outline-dim);
+  padding: 40px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.footer-copy {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--on-surface-dim);
+  margin-top: 4px;
+}
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-links a {
+  font-family: 'Geist', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-surface-dim);
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--primary); }
+
+/* ──────────────── RESPONSIVE ──────────────── */
+@media (max-width: 900px) {
+  .content-layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .principle-grid, .overlay-grid, .standards-grid { grid-template-columns: 1fr; }
+  .score-flow { grid-template-columns: 1fr; }
+  .page-hero-inner { grid-template-columns: 1fr; }
+  .page-meta { align-items: flex-start; }
+  nav { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+  <div class="nav-wordmark">
+    <span class="nav-equality">eQuality</span>
+    <span class="nav-index">Index</span>
+  </div>
+  <nav>
+    <a href="equality-index.html">Workflow Engine</a>
+    <a href="#">Underwriting</a>
+    <a href="#">Claims & Audit</a>
+    <a href="#" class="active">Methodology</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <span class="material-symbols-outlined" id="themeIcon" style="font-size:18px;">light_mode</span>
+    </button>
+    <button class="nav-pill primary">Login</button>
+  </div>
+</header>
+
+
+<main>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-glow"></div>
+    <div class="container">
+      <div class="page-hero-inner">
+        <div>
+          <div class="page-label">Methodology</div>
+          <h1 class="page-headline">Environmental risk scoring,<br><em>rigorously defined</em></h1>
+          <p class="page-sub">eQuality translates parcel-level environmental conditions into a single, actuarially defensible score.</p>
+        </div>
+        <div class="page-meta">
+          <span class="meta-chip green">Version 3.2 · March 2026</span>
+          <span class="meta-chip">Model ID: EQ-V3.2-2026-03</span>
+          <span class="meta-chip">IEIT · Impact Environmental Information Technologies</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENT LAYOUT -->
+  <div class="container">
+    <div class="content-layout">
+
+      <!-- SIDEBAR NAV -->
+      <aside class="sidebar">
+        <nav class="sidebar-nav" aria-label="Page sections">
+          <div class="sidebar-group-label">Overview</div>
+          <a class="sidebar-link active" onclick="scrollTo('overview')">What eQuality Is</a>
+          <a class="sidebar-link" onclick="scrollTo('principles')">Design Principles</a>
+
+          <div class="sidebar-group-label">Scoring</div>
+          <a class="sidebar-link" onclick="scrollTo('domains')">Risk Domains</a>
+          <a class="sidebar-link" onclick="scrollTo('tiers')">Risk Tiers</a>
+          <a class="sidebar-link" onclick="scrollTo('confidence')">Confidence</a>
+
+          <div class="sidebar-group-label">Institutional</div>
+          <a class="sidebar-link" onclick="scrollTo('overlays')">Overlays</a>
+          <a class="sidebar-link" onclick="scrollTo('governance')">Governance</a>
+          <a class="sidebar-link" onclick="scrollTo('standards')">Standards</a>
+        </nav>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <div class="content">
+
+        <!-- OVERVIEW -->
+        <div class="content-section reveal" id="overview">
+          <div class="section-eyebrow"><span class="section-eyebrow-num">01</span> Overview</div>
+          <h2 class="content-title">What eQuality is — and what it isn't</h2>
+          <div class="content-body">
+            <p>The eQuality scoring system converts parcel-level environmental conditions and operator behavior into a single, standardized score on a 300–850 scale. It is designed for institutional use by lenders, insurers, regulators, and portfolio managers who need a consistent, defensible environmental risk signal.</p>
+            <p>Every issued score is designed to support one of four capital actions: proceed, reprice, escalate diligence, or decline.</p>
+          </div>
+          <div class="callout">
+            <span class="material-symbols-outlined callout-icon">info</span>
+            <div class="callout-text">The external score output format is strictly <strong>e[score]</strong> — for example, <strong>e640</strong>. This is the only output format issued to institutional consumers.</div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- DESIGN PRINCIPLES -->
+        <div class="content-section reveal" id="principles">
+          <div class="section-eyebrow"><span class="section-eyebrow-num">02</span> Design Principles</div>
+          <h2 class="content-title">Four non-negotiable principles</h2>
+          <div class="content-body">
+            <p>Every scoring decision in eQuality is governed by four actuarial principles. These are not guidelines — they are hard constraints built into the model architecture.</p>
+          </div>
+          <div class="principle-grid">
+            <div class="principle-card">
+              <div class="principle-num">Principle 01</div>
+              <div class="principle-title">Uncertainty is penalized, not neutralized</div>
+              <div class="principle-body">Missing or incomplete data always results in a lower score. There is no pathway in which absent data improves or holds a score neutral.</div>
+            </div>
+            <div class="principle-card">
+              <div class="principle-num">Principle 02</div>
+              <div class="principle-title">Downside dominates upside</div>
+              <div class="principle-body">Negative environmental conditions carry more scoring weight than positive operator behavior. Inherited site liability outweighs claimed operator quality.</div>
+            </div>
+            <div class="principle-card">
+              <div class="principle-num">Principle 03</div>
+              <div class="principle-title">Tails matter more than means</div>
+              <div class="principle-body">Severe adverse conditions are penalized through fixed deductions that cannot be diluted or averaged away by domain-level performance.</div>
+            </div>
+            <div class="principle-card">
+              <div class="principle-num">Principle 04</div>
+              <div class="principle-title">Fail safe, not fail fair</div>
+              <div class="principle-body">Under ambiguity, the system defaults to the conservative position. No tie goes to the operator. Uncertainty is treated as risk.</div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- DOMAINS -->
+        <div class="content-section reveal" id="domains">
+          <div class="section-eyebrow"><span class="section-eyebrow-num">03</span> Risk Domains</div>
+          <h2 class="content-title">Six scoring domains</h2>
+          <div class="content-body">
+            <p>The eQuality score is constructed from exactly six domains. No additional top-level domain may be added without documented governance approval. Each domain input carries an evidence tier tag that identifies the provenance and reliability of the underlying data.</p>
+          </div>
+          <div class="domain-list">
+            <div class="domain-item">
+              <span class="domain-code">RR</span>
+              <div>
+                <div class="domain-title">Regulatory Risk</div>
+                <div class="domain-desc">Exposure to regulatory enforcement, permit noncompliance, and unresolved violations. Driven by authoritative Tier 1 regulatory records.</div>
+              </div>
+              <span class="domain-weight">Primary</span>
+            </div>
+            <div class="domain-item">
+              <span class="domain-code">CL</span>
+              <div>
+                <div class="domain-title">Contamination & Liability Risk</div>
+                <div class="domain-desc">Confirmed or suspected contamination, hazardous use legacy, and plume proximity. The highest-penalty domain in the model.</div>
+              </div>
+              <span class="domain-weight">Primary</span>
+            </div>
+            <div class="domain-item">
+              <span class="domain-code">RM</span>
+              <div>
+                <div class="domain-title">Remediation Risk</div>
+                <div class="domain-desc">Open remediation status, closure type, timeline risk, and documentation completeness. Measures the cost and certainty of environmental resolution.</div>
+              </div>
+              <span class="domain-weight">Secondary</span>
+            </div>
+            <div class="domain-item">
+              <span class="domain-code">SC</span>
+              <div>
+                <div class="domain-title">Site Context Risk</div>
+                <div class="domain-desc">Environmental vulnerability, receptor proximity, land use exposure, and adjacent site risk. Captures geographic and contextual amplifiers of liability.</div>
+              </div>
+              <span class="domain-weight">Secondary</span>
+            </div>
+            <div class="domain-item">
+              <span class="domain-code">OR</span>
+              <div>
+                <div class="domain-title">Operator Risk</div>
+                <div class="domain-desc">Operator environmental management quality across controls, compliance, incident handling, and documentation. Capped when operator data is predominantly self-reported and unverified.</div>
+              </div>
+              <span class="domain-weight">Orthogonal</span>
+            </div>
+            <div class="domain-item">
+              <span class="domain-code">DU</span>
+              <div>
+                <div class="domain-title">Data Uncertainty</div>
+                <div class="domain-desc">Measures data completeness and reliability. A penalty mechanism only — it cannot improve a score. Gaps and conflicts always reduce the final score.</div>
+              </div>
+              <span class="domain-weight">Penalty</span>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- TIERS -->
+        <div class="content-section reveal" id="tiers">
+          <div class="section-eyebrow"><span class="section-eyebrow-num">05</span> Risk Tiers</div>
+          <h2 class="content-title">Score-to-action mapping</h2>
+          <div class="content-body">
+            <p>Every eQuality score maps to a risk tier and a capital action. The tier classification is deterministic — the same score always produces the same tier and action under the same model version.</p>
+          </div>
+          <div class="tier-table">
+            <div class="tier-head">
+              <div class="tier-th">eScore</div>
+              <div class="tier-th">Tier</div>
+              <div class="tier-th">Classification</div>
+              <div class="tier-th">Capital Action</div>
+            </div>
+            <div class="tier-row">
+              <div class="tier-score">e800–e850</div>
+              <div class="tier-name">Tier 1</div>
+              <div class="tier-class">Preferred</div>
+              <div class="tier-action proceed">Proceed</div>
+            </div>
+            <div class="tier-row">
+              <div class="tier-score">e720–e799</div>
+              <div class="tier-name">Tier 2</div>
+              <div class="tier-class">Standard</div>
+              <div class="tier-action proceed">Proceed</div>
+            </div>
+            <div class="tier-row">
+              <div class="tier-score">e640–e719</div>
+              <div class="tier-name">Tier 3</div>
+              <div class="tier-class">Elevated</div>
+              <div class="tier-action reprice">Reprice</div>
+            </div>
+            <div class="tier-row">
+              <div class="tier-score">e560–e639</div>
+              <div class="tier-name">Tier 4</div>
+              <div class="tier-class">High</div>
+              <div class="tier-action escalate">Escalate Diligence</div>
+            </div>
+            <div class="tier-row">
+              <div class="tier-score">e300–e559</div>
+              <div class="tier-name">Tier 5</div>
+              <div class="tier-class">Severe</div>
+              <div class="tier-action decline">Decline</div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- CONFIDENCE -->
+        <div class="content-section reveal" id="confidence">
+          <div class="section-eyebrow"><span class="section-eyebrow-num">06</span> Confidence</div>
+          <h2 class="content-title">Confidence is about data, not score value</h2>
+          <div class="content-body">
+            <p>Confidence reflects the quality and completeness of the underlying data — not how high or low the score is. A high score built on incomplete data will carry low confidence. A low score built on authoritative records will carry high confidence.</p>
+            <p>Confidence is classified as High, Moderate, or Low based on the Data Uncertainty score. It is a separate signal from the eScore and is included in every score output.</p>
+          </div>
+          <div class="callout">
+            <span class="material-symbols-outlined callout-icon">verified</span>
+            <div class="callout-text"><strong>High confidence</strong> means sufficient authoritative and verified data was available to compute the score. <strong>Low confidence</strong> means material data gaps or source conflicts were present — and the score reflects that through uncertainty penalties.</div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- OVERLAYS -->
+        <div class="content-section reveal" id="overlays">
+          <div class="section-eyebrow"><span class="section-eyebrow-num">07</span> Institutional Overlays</div>
+          <h2 class="content-title">Non-scoring context for institutional consumers</h2>
+          <div class="content-body">
+            <p>Designed for underwriters, portfolio managers, and reserving actuaries — providing structured context that the score alone cannot convey.</p>
+          </div>
+          <div class="overlay-grid">
+            <div class="overlay-card">
+              <div class="overlay-icon"><span class="material-symbols-outlined">fact_check</span></div>
+              <div class="overlay-title">Evidence Posture</div>
+              <div class="overlay-body">A breakdown of the activated scoring inputs by evidence tier. Shows whether a score is driven by authoritative Tier 1 records or lower-tier inferred signals — making the provenance composition explicit and auditable.</div>
+            </div>
+            <div class="overlay-card">
+              <div class="overlay-icon"><span class="material-symbols-outlined">verified_user</span></div>
+              <div class="overlay-title">Verification State</div>
+              <div class="overlay-body">Indicates whether the score inputs have been independently validated. States: Unverified (default), Professionally Verified, or Audited / Institutional. Feeds into operational control class determination.</div>
+            </div>
+            <div class="overlay-card">
+              <div class="overlay-icon"><span class="material-symbols-outlined">corporate_fare</span></div>
+              <div class="overlay-title">Operational Control Class</div>
+              <div class="overlay-body">Classifies the behavioral posture of the operating entity based on the Operator Risk score and verification state. Ranges from verified stable control environment to gate review when data is insufficient to assess the operator.</div>
+            </div>
+            <div class="overlay-card">
+              <div class="overlay-icon"><span class="material-symbols-outlined">warning</span></div>
+              <div class="overlay-title">Tail Overlay Flags</div>
+              <div class="overlay-body">Structured metadata flags for latent, non-standard, or catastrophic risk exposures — including emerging contaminants, subsurface migration risk, Superfund adjacency, and liability transfer scenarios. These do not modify the score; they inform actuarial reserving and reinsurance decisions.</div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- GOVERNANCE -->
+        <div class="content-section reveal" id="governance">
+          <div class="section-eyebrow"><span class="section-eyebrow-num">08</span> Governance</div>
+          <h2 class="content-title">Hard-coded governance rules</h2>
+          <div class="content-body">
+            <p>The following rules are non-negotiable constraints built into the scoring system. They govern how the model is maintained, versioned, and applied.</p>
+          </div>
+          <div class="governance-list">
+            <div class="governance-rule">
+              <div class="rule-bullet"></div>
+              <div class="rule-text"><strong>No silent model changes.</strong> Every formula, weight, or threshold change must be documented with a change log, rationale, and approver.</div>
+            </div>
+            <div class="governance-rule">
+              <div class="rule-bullet"></div>
+              <div class="rule-text"><strong>No score issuance without version ID.</strong> Every score output carries the model version under which it was computed.</div>
+            </div>
+            <div class="governance-rule">
+              <div class="rule-bullet"></div>
+              <div class="rule-text"><strong>No human override without a written reason code.</strong> Any manual adjustment must be documented with justification and retained in the audit trail.</div>
+            </div>
+            <div class="governance-rule">
+              <div class="rule-bullet"></div>
+              <div class="rule-text"><strong>Missing data always penalizes.</strong> No scoring pathway exists in which absent data improves or neutralizes a score.</div>
+            </div>
+            <div class="governance-rule">
+              <div class="rule-bullet"></div>
+              <div class="rule-text"><strong>Property evidence dominates.</strong> Verified property-level liabilities cannot be erased by unverified positive operator claims.</div>
+            </div>
+            <div class="governance-rule">
+              <div class="rule-bullet"></div>
+              <div class="rule-text"><strong>Any formula change requires backtesting.</strong> Model changes must be validated against the reference property set before deployment.</div>
+            </div>
+            <div class="governance-rule">
+              <div class="rule-bullet"></div>
+              <div class="rule-text"><strong>Historical scores are frozen.</strong> Previously issued scores are never retroactively recalculated under a new model version.</div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- STANDARDS -->
+        <div class="content-section reveal" id="standards">
+          <div class="section-eyebrow"><span class="section-eyebrow-num">09</span> Standards Alignment</div>
+          <h2 class="content-title">Regulatory and actuarial alignment</h2>
+          <div class="content-body">
+            <p>The eQuality methodology is designed to align with the following regulatory and actuarial standards governing modeling governance, environmental liability, and institutional capital frameworks.</p>
+          </div>
+          <div class="standards-grid">
+            <div class="standard-card">
+              <div class="standard-name">ASOP No. 56</div>
+              <div class="standard-desc">Actuarial Standards of Practice governing modeling governance, documentation, and validation requirements.</div>
+            </div>
+            <div class="standard-card">
+              <div class="standard-name">CERCLA</div>
+              <div class="standard-desc">Comprehensive Environmental Response, Compensation, and Liability Act. Strict liability framework for contaminated property that underpins the scoring architecture.</div>
+            </div>
+            <div class="standard-card">
+              <div class="standard-name">Solvency II</div>
+              <div class="standard-desc">Risk-based capital and internal model governance framework for insurers operating in regulated markets.</div>
+            </div>
+            <div class="standard-card">
+              <div class="standard-name">NAIC RBC / ORSA</div>
+              <div class="standard-desc">Risk-based capital frameworks and own risk and solvency assessment for US insurance carriers.</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /content -->
+    </div><!-- /content-layout -->
+  </div><!-- /container -->
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="nav-wordmark">
+      <span class="nav-equality">eQuality</span>
+      <span class="nav-index">Index</span>
+    </div>
+    <div class="footer-copy">© 2026 IEIT · eQuality v3.2 · Insurance Workflow Platform</div>
+  </div>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Regulatory Disclosure</a>
+    <a href="#">Contact Support</a>
+  </div>
+</footer>
+
+<script>
+/* ── Theme ── */
+function toggleTheme() {
+  const root = document.documentElement;
+  const icon = document.getElementById('themeIcon');
+  const isLight = root.getAttribute('data-theme') === 'light';
+  root.setAttribute('data-theme', isLight ? '' : 'light');
+  if (isLight) root.removeAttribute('data-theme');
+  icon.textContent = isLight ? 'light_mode' : 'dark_mode';
+}
+if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+  document.documentElement.setAttribute('data-theme', 'light');
+  document.getElementById('themeIcon').textContent = 'dark_mode';
+}
+
+/* ── Scroll reveal ── */
+(function() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+})();
+
+/* ── Sidebar active state on scroll ── */
+(function() {
+  const sections = document.querySelectorAll('.content-section');
+  const links = document.querySelectorAll('.sidebar-link');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const active = document.querySelector(`.sidebar-link[onclick="scrollTo('${id}')"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => obs.observe(s));
+})();
+
+/* ── Sidebar scroll ── */
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ── Cursor glow ── */
+(function() {
+  const glow = document.createElement('div');
+  glow.style.cssText = 'position:fixed;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(190,198,224,0.04) 0%,transparent 70%);pointer-events:none;z-index:0;transform:translate(-50%,-50%);transition:left 0.1s,top 0.1s;';
+  document.body.appendChild(glow);
+  document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+})();
+</script>
+</body>
+</html>
