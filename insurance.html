@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Insurance | eQuality INDEX</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;700&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<style>
+/* ── TOKENS ── */
+:root {
+  color-scheme: dark;
+  --surface:         #101415;
+  --surface-dim:     #0b0f10;
+  --surface-low:     #191c1e;
+  --surface-mid:     #1d2022;
+  --surface-high:    #272a2c;
+  --surface-highest: #323537;
+  --on-surface:      #e0e3e5;
+  --on-surface-dim:  #909097;
+  --outline:         #909097;
+  --outline-dim:     #2e3133;
+  --primary:         #bec6e0;
+  --on-primary:      #1d2637;
+  --secondary:       #9aafd4;
+  --wordmark-color:  #e0e3e5;
+  --wordmark-sub:    #bec6e0;
+  --green:           #0d6b42;
+  --green-text:      #2aab6e;
+  --green-bg:        rgba(13,107,66,0.18);
+  --green-border:    rgba(13,107,66,0.4);
+  --amber-text:      #f0b429;
+  --intro-grid:      rgba(190,198,224,0.04);
+  --hero-glow:       rgba(190,198,224,0.05);
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --surface:         #f8fafc;
+  --surface-dim:     #e9edf2;
+  --surface-low:     #f0f4f8;
+  --surface-mid:     #ffffff;
+  --surface-high:    #e4eaf2;
+  --surface-highest: #d6dde8;
+  --on-surface:      #0f172a;
+  --on-surface-dim:  #475569;
+  --outline:         #94a3b8;
+  --outline-dim:     #cbd5e1;
+  --primary:         #1e3a6e;
+  --on-primary:      #ffffff;
+  --secondary:       #2d4f8e;
+  --wordmark-color:  #0f172a;
+  --wordmark-sub:    #1e3a6e;
+  --green:           #064e3b;
+  --green-text:      #065f46;
+  --green-bg:        rgba(6,78,59,0.08);
+  --green-border:    rgba(6,78,59,0.25);
+  --amber-text:      #b45309;
+  --intro-grid:      rgba(30,58,110,0.04);
+  --hero-glow:       rgba(30,58,110,0.05);
+}
+
+/* ── RESET + FONT ENFORCEMENT ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+html,body,input,textarea,select{font-family:'Hanken Grotesk',sans-serif;}
+h1,h2,h3,h4,h5,h6{font-family:'Public Sans',sans-serif;}
+button,[role="button"]{font-family:'Geist',monospace;}
+code,pre,kbd,samp{font-family:'Geist',monospace;}
+body{background:var(--surface);color:var(--on-surface);font-size:16px;line-height:1.5;overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;border:none;background:none;color:inherit;}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;vertical-align:middle;}
+
+/* ── NAV ── */
+header{
+  position:sticky;top:0;z-index:100;
+  background:color-mix(in srgb,var(--surface) 92%,transparent);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--outline-dim);
+  padding:0 32px;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background 0.3s,border-color 0.3s;
+}
+.nav-wordmark{display:flex;flex-direction:column;line-height:1;gap:2px;}
+.nav-equality{font-family:'Public Sans',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.02em;color:var(--wordmark-color);transition:color 0.3s;line-height:1;}
+.nav-index{font-family:'Geist',monospace;font-size:8px;letter-spacing:0.35em;color:var(--wordmark-sub);text-transform:uppercase;transition:color 0.3s;line-height:1;}
+nav{display:flex;align-items:center;gap:32px;}
+nav a{font-family:'Geist',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--on-surface-dim);transition:color 0.2s;}
+nav a:hover{color:var(--on-surface);}
+nav a.active{color:var(--primary);}
+.nav-actions{display:flex;align-items:center;gap:12px;}
+.nav-pill{font-family:'Geist',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:6px 16px;border-radius:9999px;border:1px solid var(--outline-dim);color:var(--on-surface-dim);transition:all 0.2s;}
+.nav-pill:hover{border-color:var(--primary);color:var(--primary);}
+.nav-pill.primary{background:var(--primary);color:var(--on-primary);border-color:var(--primary);}
+.nav-pill.primary:hover{background:var(--secondary);}
+.theme-toggle{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:0.5rem;border:1px solid var(--outline-dim);color:var(--on-surface-dim);background:transparent;cursor:pointer;transition:all 0.2s;font-family:'Geist',monospace;}
+.theme-toggle:hover{border-color:var(--primary);color:var(--primary);}
+
+/* ── LAYOUT ── */
+.container{max-width:1440px;margin:0 auto;padding:0 32px;}
+.section{padding:96px 0;border-bottom:1px solid var(--outline-dim);}
+
+/* ── HERO ── */
+.hero{
+  min-height:88vh;
+  display:flex;align-items:center;
+  border-bottom:1px solid var(--outline-dim);
+  position:relative;overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(var(--intro-grid) 1px,transparent 1px),linear-gradient(90deg,var(--intro-grid) 1px,transparent 1px);
+  background-size:64px 64px;pointer-events:none;
+}
+.hero-glow-left{
+  position:absolute;top:-100px;left:-200px;
+  width:700px;height:700px;
+  background:radial-gradient(circle,rgba(30,58,110,0.08) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-glow-right{
+  position:absolute;bottom:-200px;right:-100px;
+  width:600px;height:600px;
+  background:radial-gradient(circle,var(--hero-glow) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-inner{
+  position:relative;z-index:1;
+  padding:80px 0;
+  max-width:720px;
+}
+.hero-eyebrow{
+  font-family:'Geist',monospace;
+  font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--green-text);
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:20px;
+}
+.hero-eyebrow-line{width:24px;height:1px;background:var(--green-text);}
+.hero-h1{
+  font-family:'Public Sans',sans-serif;
+  font-size:clamp(40px,4.5vw,68px);
+  font-weight:700;
+  letter-spacing:-0.03em;
+  line-height:1.05;
+  color:var(--on-surface);
+  margin-bottom:28px;
+}
+.hero-h1 em{font-style:normal;color:var(--primary);}
+.hero-sub{
+  font-family:'Hanken Grotesk',sans-serif;
+  font-size:17px;line-height:1.75;
+  color:var(--on-surface-dim);
+  max-width:520px;
+  margin-bottom:40px;
+}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:0.5rem;font-family:'Geist',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;transition:all 0.2s;cursor:pointer;border:1px solid transparent;}
+.btn-primary{background:var(--primary);color:var(--on-primary);}
+.btn-primary:hover{background:var(--secondary);}
+.btn-ghost{border-color:var(--outline-dim);color:var(--on-surface-dim);}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary);}
+
+/* Hero right — tension stat */
+.hero-right{display:flex;flex-direction:column;gap:1px;}
+.tension-card{
+  background:var(--surface-mid);
+  border:1px solid var(--outline-dim);
+  border-radius:1rem;
+  padding:36px 40px;
+  position:relative;
+  overflow:hidden;
+}
+.tension-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--primary),var(--green-text));
+}
+.tension-num{
+  font-family:'Geist',monospace;
+  font-size:72px;font-weight:700;letter-spacing:-0.05em;
+  color:var(--on-surface);line-height:1;
+  margin-bottom:8px;
+}
+.tension-unit{font-size:32px;color:var(--primary);}
+.tension-label{
+  font-family:'Hanken Grotesk',sans-serif;
+  font-size:14px;line-height:1.6;
+  color:var(--on-surface-dim);
+  margin-bottom:20px;
+}
+.tension-source{
+  font-family:'Geist',monospace;
+  font-size:9px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--on-surface-dim);opacity:0.5;
+}
+.mini-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--outline-dim);
+  border:1px solid var(--outline-dim);
+  border-radius:1rem;overflow:hidden;
+  margin-top:12px;
+}
+.mini-stat{
+  background:var(--surface-mid);
+  padding:20px 24px;
+  transition:background 0.2s;
+}
+.mini-stat:hover{background:var(--surface-high);}
+.mini-stat-num{
+  font-family:'Geist',monospace;
+  font-size:28px;font-weight:700;letter-spacing:-0.03em;
+  color:var(--on-surface);line-height:1;margin-bottom:4px;
+}
+.mini-stat-num .unit{font-size:16px;color:var(--primary);}
+.mini-stat-label{font-family:'Geist',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--on-surface-dim);}
+
+/* ── PROBLEM BAND ── */
+.problem-band{
+  background:var(--surface-low);
+  border-bottom:1px solid var(--outline-dim);
+  padding:0;
+}
+.problem-scroll{
+  display:flex;
+  border-left:1px solid var(--outline-dim);
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.problem-scroll::-webkit-scrollbar{display:none;}
+.problem-item{
+  flex:0 0 320px;
+  padding:40px 36px;
+  border-right:1px solid var(--outline-dim);
+  display:flex;flex-direction:column;gap:12px;
+  transition:background 0.2s;
+}
+.problem-item:hover{background:var(--surface-mid);}
+.problem-tag{font-family:'Geist',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--amber-text);}
+.problem-title{font-family:'Public Sans',sans-serif;font-size:16px;font-weight:600;color:var(--on-surface);line-height:1.3;}
+.problem-body{font-family:'Hanken Grotesk',sans-serif;font-size:13px;line-height:1.65;color:var(--on-surface-dim);}
+
+/* ── SECTION LABELS ── */
+.section-label{font-family:'Geist',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--green-text);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label::before{content:'';display:block;width:20px;height:1px;background:var(--green-text);}
+.section-title{font-family:'Public Sans',sans-serif;font-size:clamp(28px,3vw,44px);font-weight:600;letter-spacing:-0.025em;color:var(--on-surface);line-height:1.1;margin-bottom:20px;}
+.section-title em{font-style:normal;color:var(--primary);}
+.section-sub{font-family:'Hanken Grotesk',sans-serif;font-size:16px;line-height:1.75;color:var(--on-surface-dim);max-width:580px;margin-bottom:56px;}
+
+/* ── PRODUCT GRID ── */
+.product-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--outline-dim);
+  border:1px solid var(--outline-dim);border-radius:1rem;overflow:hidden;
+}
+.product-card{
+  background:var(--surface-mid);padding:36px 32px;
+  display:flex;flex-direction:column;gap:16px;
+  transition:background 0.2s;cursor:default;
+  position:relative;overflow:hidden;
+}
+.product-card:hover{background:var(--surface-high);}
+.product-card.featured{background:var(--surface-dim);}
+.product-card.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--primary),var(--green-text));}
+.product-card-tag{font-family:'Geist',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--on-surface-dim);}
+.product-card-title{font-family:'Public Sans',sans-serif;font-size:18px;font-weight:600;color:var(--on-surface);line-height:1.25;}
+.product-card-body{font-family:'Hanken Grotesk',sans-serif;font-size:13px;line-height:1.7;color:var(--on-surface-dim);}
+.product-card-signal{
+  margin-top:auto;padding-top:20px;border-top:1px solid var(--outline-dim);
+  display:flex;align-items:center;gap:8px;
+  font-family:'Geist',monospace;font-size:10px;letter-spacing:0.08em;
+  color:var(--green-text);
+}
+.signal-dot{width:5px;height:5px;border-radius:50%;background:var(--green-text);animation:blink 2s ease infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+/* ── WORKFLOW TABLE ── */
+.workflow-table{width:100%;border:1px solid var(--outline-dim);border-radius:1rem;overflow:hidden;}
+.wf-head{display:grid;grid-template-columns:1.5fr 1.5fr 1fr;padding:12px 24px;background:var(--surface-low);border-bottom:1px solid var(--outline-dim);}
+.wf-th{font-family:'Geist',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--on-surface-dim);}
+.wf-row{display:grid;grid-template-columns:1.5fr 1.5fr 1fr;padding:20px 24px;border-bottom:1px solid var(--outline-dim);align-items:start;transition:background 0.15s;}
+.wf-row:last-child{border-bottom:none;}
+.wf-row:hover{background:var(--surface-low);}
+.wf-stage{font-family:'Public Sans',sans-serif;font-size:14px;font-weight:600;color:var(--on-surface);line-height:1.3;}
+.wf-stage-sub{font-family:'Geist',monospace;font-size:9px;letter-spacing:0.08em;color:var(--on-surface-dim);margin-top:3px;}
+.wf-today{font-family:'Hanken Grotesk',sans-serif;font-size:13px;line-height:1.6;color:var(--on-surface-dim);}
+.wf-eq{font-family:'Hanken Grotesk',sans-serif;font-size:13px;line-height:1.6;color:var(--green-text);}
+
+/* ── PAIN POINTS ── */
+.pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.pain-card{
+  background:var(--surface-mid);border:1px solid var(--outline-dim);border-radius:1rem;padding:28px 28px;
+  display:flex;flex-direction:column;gap:12px;
+  transition:background 0.2s,border-color 0.2s;
+}
+.pain-card:hover{background:var(--surface-high);border-color:var(--primary);}
+.pain-card.amber{border-left:3px solid var(--amber-text);}
+.pain-num{font-family:'Geist',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--on-surface-dim);opacity:0.5;}
+.pain-title{font-family:'Public Sans',sans-serif;font-size:15px;font-weight:600;color:var(--on-surface);line-height:1.3;}
+.pain-body{font-family:'Hanken Grotesk',sans-serif;font-size:13px;line-height:1.65;color:var(--on-surface-dim);}
+
+/* ── SPLIT LAYOUT ── */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.split.flip .split-visual{order:-1;}
+
+/* ── SCORE DEMO ── */
+.score-demo{
+  background:var(--surface-mid);
+  border:1px solid var(--outline-dim);border-radius:1rem;overflow:hidden;
+}
+.score-demo-header{
+  background:var(--surface-low);border-bottom:1px solid var(--outline-dim);
+  padding:14px 20px;display:flex;align-items:center;justify-content:space-between;
+}
+.score-demo-title{font-family:'Geist',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--on-surface-dim);}
+.score-demo-live{display:flex;align-items:center;gap:6px;font-family:'Geist',monospace;font-size:9px;letter-spacing:0.1em;color:var(--green-text);}
+.score-demo-body{padding:32px 32px 28px;}
+.escore-display{display:flex;align-items:baseline;gap:2px;margin-bottom:4px;}
+.escore-e{font-family:'Public Sans',sans-serif;font-size:24px;font-weight:600;color:var(--on-surface-dim);}
+.escore-num{font-family:'Geist',monospace;font-size:80px;font-weight:700;letter-spacing:-0.05em;color:var(--on-surface);line-height:1;}
+.escore-sub{font-family:'Geist',monospace;font-size:10px;letter-spacing:0.06em;color:var(--on-surface-dim);margin-bottom:20px;}
+.escore-bar-wrap{margin-bottom:6px;}
+.escore-bar-track{height:5px;border-radius:3px;background:linear-gradient(90deg,var(--green-text) 0%,#c8871a 55%,#b03020 100%);position:relative;}
+.escore-needle{position:absolute;top:-5px;left:61.8%;width:2px;height:15px;background:var(--on-surface);border-radius:1px;transform:translateX(-50%);transition:left 1.4s cubic-bezier(0.34,1.2,0.64,1);}
+.escore-bar-labels{display:flex;justify-content:space-between;margin-top:5px;}
+.escore-bar-label{font-family:'Geist',monospace;font-size:9px;letter-spacing:0.06em;color:var(--on-surface-dim);}
+.escore-meta{display:flex;gap:0;border-top:1px solid var(--outline-dim);margin-top:20px;}
+.escore-meta-item{flex:1;padding:14px 16px;border-right:1px solid var(--outline-dim);display:flex;flex-direction:column;gap:3px;}
+.escore-meta-item:last-child{border-right:none;}
+.escore-meta-lbl{font-family:'Geist',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--on-surface-dim);}
+.escore-meta-val{font-family:'Public Sans',sans-serif;font-size:13px;font-weight:600;color:var(--on-surface);}
+.escore-meta-val.green{color:var(--green-text);}
+
+/* ── VERTICALS ── */
+.vertical-list{display:flex;flex-direction:column;gap:1px;}
+.vertical-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;
+  background:var(--surface-mid);border:1px solid var(--outline-dim);border-radius:0.5rem;
+  transition:background 0.15s,border-color 0.15s;cursor:default;
+}
+.vertical-item:hover{background:var(--surface-high);border-color:var(--primary);}
+.vertical-name{font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:500;color:var(--on-surface);}
+.vertical-type{font-family:'Geist',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--on-surface-dim);}
+.vertical-badge{
+  font-family:'Geist',monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;
+  padding:4px 10px;border-radius:9999px;
+  background:var(--green-bg);border:1px solid var(--green-border);color:var(--green-text);
+}
+
+/* ── CTA BAND ── */
+.cta-band{
+  background:var(--surface-low);
+  padding:80px 0;
+  text-align:center;
+  border-bottom:none;
+}
+.cta-band .section-title{margin:0 auto 16px;}
+.cta-band .section-sub{margin:0 auto 40px;text-align:center;}
+.cta-ctas{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1);}
+.reveal.revealed{opacity:1;transform:none;}
+.reveal-up{opacity:0;transform:translateY(20px);transition:opacity 0.5s cubic-bezier(0.16,1,0.3,1),transform 0.5s cubic-bezier(0.16,1,0.3,1);}
+.reveal-up.revealed{opacity:1;transform:none;}
+.stagger>*{opacity:0;transform:translateY(16px);transition:opacity 0.5s cubic-bezier(0.16,1,0.3,1),transform 0.5s cubic-bezier(0.16,1,0.3,1);}
+.stagger.revealed>*:nth-child(1){opacity:1;transform:none;transition-delay:0ms;}
+.stagger.revealed>*:nth-child(2){opacity:1;transform:none;transition-delay:80ms;}
+.stagger.revealed>*:nth-child(3){opacity:1;transform:none;transition-delay:160ms;}
+.stagger.revealed>*:nth-child(4){opacity:1;transform:none;transition-delay:240ms;}
+.stagger.revealed>*:nth-child(5){opacity:1;transform:none;transition-delay:320ms;}
+.stagger.revealed>*:nth-child(6){opacity:1;transform:none;transition-delay:400ms;}
+
+/* ── FOOTER ── */
+footer{background:var(--surface-low);border-top:1px solid var(--outline-dim);padding:40px 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;}
+.footer-copy{font-family:'Geist',monospace;font-size:10px;letter-spacing:0.08em;color:var(--on-surface-dim);margin-top:4px;}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap;}
+.footer-links a{font-family:'Geist',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--on-surface-dim);transition:color 0.2s;}
+.footer-links a:hover{color:var(--primary);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-inner,.split,.pain-grid,.product-grid{grid-template-columns:1fr;}
+  nav{display:none;}
+  .mini-stats{grid-template-columns:1fr;}
+  .wf-head,.wf-row{grid-template-columns:1fr 1fr;}
+  .wf-th:last-child,.wf-row>*:last-child{display:none;}
+  .split.flip .split-visual{order:0;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+  <div class="nav-wordmark">
+    <span class="nav-equality">eQuality</span>
+    <span class="nav-index">Index</span>
+  </div>
+  <nav>
+    <a href="equality-index.html">Overview</a>
+    <a href="#" class="active">Insurance</a>
+    <a href="#">Lending</a>
+    <a href="methodology.html">Methodology</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+      <span class="material-symbols-outlined" id="themeIcon" style="font-size:18px;">light_mode</span>
+    </button>
+    <button class="nav-pill primary">Login</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow-left"></div>
+    <div class="hero-glow-right"></div>
+    <div class="container">
+      <div class="hero-inner">
+
+        <div>
+          <div class="hero-eyebrow"><span class="hero-eyebrow-line"></span>Environmental Insurance</div>
+          <h1 class="hero-h1">A standardized risk signal<br>for <em>environmental insurance</em></h1>
+          <p class="hero-sub">eQuality provides a property-level environmental risk score designed to integrate into underwriting, actuarial, and portfolio workflows — bringing consistency and clarity to a line that has historically relied on judgment and narrative.</p>
+          <div class="hero-ctas">
+            <button class="btn btn-primary">
+              <span class="material-symbols-outlined" style="font-size:15px;">analytics</span>
+              Get Equality Score
+            </button>
+            <a href="methodology.html" class="btn btn-ghost">
+              <span class="material-symbols-outlined" style="font-size:15px;">description</span>
+              View Methodology
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PROBLEM BAND ══ -->
+  <div class="problem-band">
+    <div class="problem-scroll">
+      <div class="problem-item">
+        <div class="problem-tag">Underwriting</div>
+        <div class="problem-title">A market built on judgment, not a common signal</div>
+        <div class="problem-body">Environmental underwriting relies on Phase I ESA narratives — qualitative, point-in-time documents. eQuality translates that narrative into a standardized, reproducible score that travels with the submission and holds up in any review.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-tag">Pricing</div>
+        <div class="problem-title">Site-level precision for actuarial models</div>
+        <div class="problem-body">Class-based rates are a practical starting point, but they treat every site in a category the same. eQuality adds a cardinal, site-specific variable that actuaries can use to differentiate risk within a class — improving the precision of technical pricing.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-tag">Portfolio</div>
+        <div class="problem-title">A book you can actually aggregate</div>
+        <div class="problem-body">eScores are numbers. A portfolio of numbers can be modeled, aggregated, and presented to reinsurers as a quantified risk view. That's not possible with a collection of Phase I narratives — and it's what eQuality makes available for the first time.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-tag">Emerging Risk</div>
+        <div class="problem-title">Structured visibility into emerging exposures</div>
+        <div class="problem-body">Tail overlay flags in the eQuality output provide structured metadata on emerging contaminant exposure — including PFAS — at the site level. A proactive signal, not a reactive one, built into every score output.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-tag">Monitoring</div>
+        <div class="problem-title">A dynamic signal between renewals</div>
+        <div class="problem-body">Environmental risk changes continuously. eQuality is designed to provide an updated signal as regulatory records, enforcement status, and site conditions evolve — not just at submission or renewal.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-tag">Consistency</div>
+        <div class="problem-title">Pricing that doesn't vary by underwriter</div>
+        <div class="problem-body">A reproducible score creates institutional pricing memory. The same site produces the same signal regardless of which underwriter reviews it — building consistency across your team and preserving it through personnel changes.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ WHAT EQUALITY DOES ══ -->
+  <section class="section">
+    <div class="container">
+      <div class="split">
+
+        <div class="reveal">
+          <div class="section-label">The Signal</div>
+          <h2 class="section-title">One score.<br><em>Every site.</em><br>Actuarially defensible.</h2>
+          <p class="section-sub">eQuality converts parcel-level environmental conditions and operator behavior into a standardized score on a 300–850 scale. The same format, the same methodology, every time — so you can compare, aggregate, and act.</p>
+          <p style="font-family:'Hanken Grotesk',sans-serif;font-size:15px;line-height:1.7;color:var(--on-surface-dim);">Every issued score maps to a capital action: <strong style="color:var(--on-surface);">proceed, reprice, escalate diligence, or decline</strong>. Not a narrative. Not a recommendation. A decision-ready output built for the underwriting workflow.</p>
+        </div>
+
+        <div class="split-visual reveal">
+          <div class="score-demo">
+            <div class="score-demo-header">
+              <span class="score-demo-title">eQuality Score Output</span>
+              <span class="score-demo-live"><span class="signal-dot"></span>Sample</span>
+            </div>
+            <div class="score-demo-body">
+              <div class="escore-display">
+                <span class="escore-e">e</span>
+                <span class="escore-num">640</span>
+              </div>
+              <div class="escore-sub">Property-level environmental risk signal</div>
+              <div class="escore-bar-wrap">
+                <div class="escore-bar-track">
+                  <div class="escore-needle" id="scoreNeedle"></div>
+                </div>
+                <div class="escore-bar-labels">
+                  <span class="escore-bar-label">Lower risk</span>
+                  <span class="escore-bar-label">Higher risk</span>
+                </div>
+              </div>
+              <div class="escore-meta">
+                <div class="escore-meta-item">
+                  <span class="escore-meta-lbl">Tier</span>
+                  <span class="escore-meta-val">Tier 3 — Elevated</span>
+                </div>
+                <div class="escore-meta-item">
+                  <span class="escore-meta-lbl">Confidence</span>
+                  <span class="escore-meta-val green">HIGH</span>
+                </div>
+                <div class="escore-meta-item">
+                  <span class="escore-meta-lbl">Action</span>
+                  <span class="escore-meta-val">Reprice</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WHERE IT FITS IN YOUR WORKFLOW ══ -->
+  <section class="section">
+    <div class="container reveal">
+      <div class="section-label">Workflow Integration</div>
+      <h2 class="section-title">Where eQuality inserts<br>into <em>your process</em></h2>
+      <p class="section-sub">The environmental underwriting workflow has six stages. Each one currently relies on manual judgment or blunt instruments. eQuality provides a structured input at every stage.</p>
+
+      <div class="workflow-table">
+        <div class="wf-head">
+          <div class="wf-th">Stage</div>
+          <div class="wf-th">Without eQuality</div>
+          <div class="wf-th">With eQuality</div>
+        </div>
+        <div class="wf-row">
+          <div><div class="wf-stage">Submission Triage</div><div class="wf-stage-sub">First look · Accept / refer / decline</div></div>
+          <div class="wf-today">No standardized signal. Underwriter judgment call based on application quality and experience.</div>
+          <div class="wf-eq">Instant site-level eScore at submission. Triage is reproducible, auditable, and consistent across your team.</div>
+        </div>
+        <div class="wf-row">
+          <div><div class="wf-stage">Exposure Classification</div><div class="wf-stage-sub">Risk tiering · SIC/NAICS</div></div>
+          <div class="wf-today">Industry class codes. Cannot differentiate a clean site from a contaminated one in the same SIC.</div>
+          <div class="wf-eq">Site-specific environmental risk tier. Classification reflects actual parcel conditions, not industry averages.</div>
+        </div>
+        <div class="wf-row">
+          <div><div class="wf-stage">Rating</div><div class="wf-stage-sub">Premium calculation</div></div>
+          <div class="wf-today">Actuarial class rates plus manual load. No cardinal variable for environmental hazard at the site level.</div>
+          <div class="wf-eq">eScore as a rating variable. A cardinal input that quantifies site-level environmental hazard for actuarial use.</div>
+        </div>
+        <div class="wf-row">
+          <div><div class="wf-stage">Terms & Conditions</div><div class="wf-stage-sub">Retentions · Exclusions · Limits</div></div>
+          <div class="wf-today">Underwriter judgment for retention sizing. No objective basis for structure decisions on site risk.</div>
+          <div class="wf-eq">Evidence tier, confidence level, and tail overlay flags provide structured context for coverage structure decisions.</div>
+        </div>
+        <div class="wf-row">
+          <div><div class="wf-stage">Portfolio Monitoring</div><div class="wf-stage-sub">Book-level risk management</div></div>
+          <div class="wf-today">Phase I narratives cannot be aggregated. Portfolio-level environmental exposure is unknown.</div>
+          <div class="wf-eq">Scores aggregate mathematically. Build exceedance curves, monitor concentration, identify PFAS-exposed accounts.</div>
+        </div>
+        <div class="wf-row" style="border-bottom:none;">
+          <div><div class="wf-stage">Renewal</div><div class="wf-stage-sub">Re-rating · Mid-term action</div></div>
+          <div class="wf-today">Policyholder attestation. No systematic monitoring of site conditions between policy terms.</div>
+          <div class="wf-eq">Dynamic site-level signal. Changes in regulatory status, enforcement, or contamination can trigger mid-term action.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PRODUCT LINES ══ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-label reveal">Product Lines</div>
+      <h2 class="section-title reveal">Built for<br><em>every line</em> you write</h2>
+      <p class="section-sub reveal">eQuality is relevant wherever site-level environmental conditions influence underwriting, pricing, or reserving decisions.</p>
+
+      <div class="product-grid stagger">
+        <div class="product-card featured">
+          <div class="product-card-tag">Core Application</div>
+          <div class="product-card-title">Pollution Legal Liability</div>
+          <div class="product-card-body">The largest and most complex environmental line. PLL underwriting is gated on Phase I quality and underwriter experience. eQuality provides a reproducible, cardinal input for every submission — standardizing what has historically been a judgment-only process.</div>
+          <div class="product-card-signal"><span class="signal-dot"></span>Highest impact · Triage + rating variable</div>
+        </div>
+        <div class="product-card">
+          <div class="product-card-tag">Actuarial</div>
+          <div class="product-card-title">Actuarial Integration</div>
+          <div class="product-card-body">A site-level rating variable that supplements class-based pricing with property-specific data. Addresses the foundational limitation of GLMs applied to environmental lines — the absence of a cardinal site-level hazard input.</div>
+          <div class="product-card-signal"><span class="signal-dot"></span>Rating variable · Loss ratio differentiation</div>
+        </div>
+        <div class="product-card">
+          <div class="product-card-tag">Portfolio</div>
+          <div class="product-card-title">Reinsurance & Capital</div>
+          <div class="product-card-body">eScores aggregate mathematically. For the first time, you can construct exceedance probability curves for your environmental book, monitor PFAS exposure concentration, and provide reinsurers with a quantified portfolio view.</div>
+          <div class="product-card-signal"><span class="signal-dot"></span>Aggregation · EP curves · Treaty support</div>
+        </div>
+        <div class="product-card">
+          <div class="product-card-tag">Specialty</div>
+          <div class="product-card-title">Environmental Rep & Warranty</div>
+          <div class="product-card-body">Transaction-driven environmental risk requires rapid, objective site-level assessment. eQuality produces a structured score at deal speed, providing underwriters with a consistent baseline for transactional environmental decisions.</div>
+          <div class="product-card-signal"><span class="signal-dot"></span>Deal-speed scoring · Transactional use</div>
+        </div>
+        <div class="product-card">
+          <div class="product-card-tag">Specialty</div>
+          <div class="product-card-title">Environmental Impairment Liability</div>
+          <div class="product-card-body">EIL is the most actuarially complex environmental line — long-tail, reinsurance-dependent, and severely data-poor. eQuality's uncertainty penalty and data confidence signal provide structural information that GLMs cannot produce from historical loss data alone.</div>
+          <div class="product-card-signal"><span class="signal-dot"></span>Tail risk · Uncertainty quantification</div>
+        </div>
+        <div class="product-card">
+          <div class="product-card-tag">Emerging</div>
+          <div class="product-card-title">Renewable Energy & Construction</div>
+          <div class="product-card-body">The energy transition is generating a new category of environmental exposure — legacy contamination at renewable sites, construction runoff, and brownfield redevelopment. eQuality provides a scoring framework before loss data exists to build one.</div>
+          <div class="product-card-signal"><span class="signal-dot"></span>Emerging risk · Pre-loss data framework</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ MARKET VERTICALS ══ -->
+  <section class="section">
+    <div class="container">
+      <div class="split">
+
+        <div class="reveal">
+          <div class="section-label">Market Verticals</div>
+          <h2 class="section-title">Every vertical.<br><em>Same signal.</em></h2>
+          <p class="section-sub">Environmental risk cuts across every industry sector. eQuality provides a consistent, comparable score regardless of SIC code, site type, or buyer category — so your book speaks a common language.</p>
+          <p style="font-family:'Hanken Grotesk',sans-serif;font-size:15px;line-height:1.7;color:var(--on-surface-dim);">The market today prices the same contamination risk differently depending on which underwriter reviews it. eQuality makes that variance visible — and eliminates it.</p>
+        </div>
+
+        <div class="split-visual reveal">
+          <div class="vertical-list stagger">
+            <div class="vertical-item">
+              <div><div class="vertical-name">Industrial Manufacturing</div><div class="vertical-type">PLL · EIL · Product Pollution</div></div>
+              <span class="vertical-badge">High Priority</span>
+            </div>
+            <div class="vertical-item">
+              <div><div class="vertical-name">Real Estate & Brownfield</div><div class="vertical-type">PLL · Lender Endorsement</div></div>
+              <span class="vertical-badge">High Priority</span>
+            </div>
+            <div class="vertical-item">
+              <div><div class="vertical-name">Energy (Oil & Gas)</div><div class="vertical-type">PLL · EIL · Combined GL/Pollution</div></div>
+              <span class="vertical-badge">Active</span>
+            </div>
+            <div class="vertical-item">
+              <div><div class="vertical-name">Municipalities & Public Sector</div><div class="vertical-type">PLL · EIL · Professional</div></div>
+              <span class="vertical-badge">Active</span>
+            </div>
+            <div class="vertical-item">
+              <div><div class="vertical-name">M&A Transactions</div><div class="vertical-type">Environmental Rep & Warranty</div></div>
+              <span class="vertical-badge">Active</span>
+            </div>
+            <div class="vertical-item">
+              <div><div class="vertical-name">Renewable Energy</div><div class="vertical-type">CPL · PLL · Operational</div></div>
+              <span class="vertical-badge">Emerging</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PAIN POINTS ADDRESSED ══ -->
+  <section class="section">
+    <div class="container reveal">
+      <div class="section-label">What eQuality Addresses</div>
+      <h2 class="section-title">Where the signal<br><em>makes a difference</em></h2>
+      <p class="section-sub">Four areas where a standardized, site-level environmental risk score changes what's possible for underwriters, actuaries, and portfolio managers.</p>
+
+      <div class="pain-grid stagger">
+        <div class="pain-card amber">
+          <div class="pain-num">01</div>
+          <div class="pain-title">A cardinal rating variable for environmental lines</div>
+          <div class="pain-body">eQuality is a standardized, site-level risk score on a 300–850 scale — structured for actuarial integration into existing rating frameworks alongside or in place of manual load factors.</div>
+        </div>
+        <div class="pain-card amber">
+          <div class="pain-num">02</div>
+          <div class="pain-title">Structured visibility into emerging contaminant exposure</div>
+          <div class="pain-body">Tail overlay flags in the eQuality output provide site-level metadata on emerging contaminant exposure — a proactive, structured signal built into every score output rather than surfaced at claim time.</div>
+        </div>
+        <div class="pain-card amber">
+          <div class="pain-num">03</div>
+          <div class="pain-title">Portfolio aggregation that wasn't possible before</div>
+          <div class="pain-body">A portfolio of eScores can be statistically aggregated into exceedance curves, concentration reports, and reinsurance submissions. The same capability that property-catastrophe built in the 1990s, applied to environmental risk now.</div>
+        </div>
+        <div class="pain-card amber">
+          <div class="pain-num">04</div>
+          <div class="pain-title">Consistent pricing across your team</div>
+          <div class="pain-body">A reproducible score creates institutional pricing memory. The same site produces the same signal regardless of who reviews it — building consistency that survives team changes and scales with volume.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA ══ -->
+  <div class="cta-band">
+    <div class="container">
+      <div class="section-label" style="justify-content:center;">Get Started</div>
+      <h2 class="section-title" style="max-width:560px;margin:0 auto 16px;">Environmental risk intelligence<br>built for institutional capital.</h2>
+      <p class="section-sub" style="margin:0 auto 40px;">For underwriters, actuaries, and portfolio managers evaluating environmental risk tools. Institutional and enterprise inquiries welcome.</p>
+      <div class="cta-ctas">
+        <button class="btn btn-primary">
+          <span class="material-symbols-outlined" style="font-size:15px;">analytics</span>
+          Get Equality Score
+        </button>
+        <a href="methodology.html" class="btn btn-ghost">
+          <span class="material-symbols-outlined" style="font-size:15px;">description</span>
+          View Methodology
+        </a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="nav-wordmark">
+      <span class="nav-equality">eQuality</span>
+      <span class="nav-index">Index</span>
+    </div>
+    <div class="footer-copy">© 2026 IEIT · eQuality v3.2 · Insurance Workflow Platform</div>
+  </div>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Regulatory Disclosure</a>
+    <a href="#">Contact Support</a>
+  </div>
+</footer>
+
+<script>
+/* ── Theme ── */
+function toggleTheme() {
+  const root = document.documentElement;
+  const icon = document.getElementById('themeIcon');
+  const isLight = root.getAttribute('data-theme') === 'light';
+  if (isLight) { root.removeAttribute('data-theme'); icon.textContent = 'light_mode'; }
+  else { root.setAttribute('data-theme', 'light'); icon.textContent = 'dark_mode'; }
+}
+if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+  document.documentElement.setAttribute('data-theme', 'light');
+  document.getElementById('themeIcon').textContent = 'dark_mode';
+}
+
+/* ── Scroll reveal ── */
+(function() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal, .reveal-up, .stagger').forEach(el => obs.observe(el));
+})();
+
+/* ── Needle entrance ── */
+(function() {
+  const needle = document.getElementById('scoreNeedle');
+  if (!needle) return;
+  needle.style.left = '0%';
+  setTimeout(() => { needle.style.left = '61.8%'; }, 900);
+})();
+
+/* ── Cursor glow ── */
+(function() {
+  const g = document.createElement('div');
+  g.style.cssText = 'position:fixed;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(190,198,224,0.03) 0%,transparent 70%);pointer-events:none;z-index:0;transform:translate(-50%,-50%);';
+  document.body.appendChild(g);
+  document.addEventListener('mousemove', e => { g.style.left = e.clientX + 'px'; g.style.top = e.clientY + 'px'; });
+})();
+
+/* ── Bento tilt ── */
+(function() {
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `translateY(-3px) rotateX(${-y*3}deg) rotateY(${x*3}deg)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    card.style.transformStyle = 'preserve-3d';
+    card.style.transition = 'transform 0.4s cubic-bezier(0.16,1,0.3,1), background 0.2s';
+  });
+})();
+</script>
+</body>
+</html>

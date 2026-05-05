@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Platform | eQuality INDEX</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;700&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<style>
+/* ── TOKENS ── */
+:root {
+  color-scheme: dark;
+  --surface:         #101415;
+  --surface-dim:     #0b0f10;
+  --surface-low:     #191c1e;
+  --surface-mid:     #1d2022;
+  --surface-high:    #272a2c;
+  --surface-highest: #323537;
+  --on-surface:      #e0e3e5;
+  --on-surface-dim:  #909097;
+  --outline:         #909097;
+  --outline-dim:     #2e3133;
+  --primary:         #bec6e0;
+  --on-primary:      #1d2637;
+  --secondary:       #9aafd4;
+  --wordmark-color:  #e0e3e5;
+  --wordmark-sub:    #bec6e0;
+  --green:           #0d6b42;
+  --green-text:      #2aab6e;
+  --green-bg:        rgba(13,107,66,0.18);
+  --green-border:    rgba(13,107,66,0.4);
+  --amber-text:      #f0b429;
+  --red-text:        #e05c4b;
+  --intro-grid:      rgba(190,198,224,0.04);
+  --hero-glow:       rgba(190,198,224,0.04);
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --surface:         #f8fafc;
+  --surface-dim:     #e9edf2;
+  --surface-low:     #f0f4f8;
+  --surface-mid:     #ffffff;
+  --surface-high:    #e4eaf2;
+  --surface-highest: #d6dde8;
+  --on-surface:      #0f172a;
+  --on-surface-dim:  #475569;
+  --outline:         #94a3b8;
+  --outline-dim:     #cbd5e1;
+  --primary:         #1e3a6e;
+  --on-primary:      #ffffff;
+  --secondary:       #2d4f8e;
+  --wordmark-color:  #0f172a;
+  --wordmark-sub:    #1e3a6e;
+  --green:           #064e3b;
+  --green-text:      #065f46;
+  --green-bg:        rgba(6,78,59,0.08);
+  --green-border:    rgba(6,78,59,0.25);
+  --amber-text:      #b45309;
+  --red-text:        #b91c1c;
+  --intro-grid:      rgba(30,58,110,0.04);
+  --hero-glow:       rgba(30,58,110,0.04);
+}
+
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+html,body,input,textarea,select{font-family:'Hanken Grotesk',sans-serif;}
+h1,h2,h3,h4,h5,h6{font-family:'Public Sans',sans-serif;}
+button,[role="button"]{font-family:'Geist',monospace;}
+code,pre,kbd,samp{font-family:'Geist',monospace;}
+body{background:var(--surface);color:var(--on-surface);font-size:16px;line-height:1.5;overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;border:none;background:none;color:inherit;}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;vertical-align:middle;}
+
+/* ── NAV ── */
+header{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--outline-dim);padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;transition:background 0.3s,border-color 0.3s;}
+.nav-wordmark{display:flex;flex-direction:column;line-height:1;gap:2px;}
+.nav-equality{font-family:'Public Sans',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.02em;color:var(--wordmark-color);transition:color 0.3s;line-height:1;}
+.nav-index{font-family:'Geist',monospace;font-size:8px;letter-spacing:0.35em;color:var(--wordmark-sub);text-transform:uppercase;transition:color 0.3s;line-height:1;}
+nav{display:flex;align-items:center;gap:32px;}
+nav a{font-family:'Geist',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--on-surface-dim);transition:color 0.2s;}
+nav a:hover{color:var(--on-surface);}
+nav a.active{color:var(--primary);}
+.nav-actions{display:flex;align-items:center;gap:12px;}
+.nav-pill{font-family:'Geist',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:6px 16px;border-radius:9999px;border:1px solid var(--outline-dim);color:var(--on-surface-dim);transition:all 0.2s;}
+.nav-pill:hover{border-color:var(--primary);color:var(--primary);}
+.nav-pill.primary{background:var(--primary);color:var(--on-primary);border-color:var(--primary);}
+.nav-pill.primary:hover{background:var(--secondary);}
+.theme-toggle{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:0.5rem;border:1px solid var(--outline-dim);color:var(--on-surface-dim);background:transparent;cursor:pointer;transition:all 0.2s;}
+.theme-toggle:hover{border-color:var(--primary);color:var(--primary);}
+
+/* ── LAYOUT ── */
+.container{max-width:1440px;margin:0 auto;padding:0 32px;}
+.section{padding:96px 0;border-bottom:1px solid var(--outline-dim);}
+.section-label{font-family:'Geist',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--green-text);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label::before{content:'';display:block;width:20px;height:1px;background:var(--green-text);}
+.section-title{font-family:'Public Sans',sans-serif;font-size:clamp(28px,3vw,44px);font-weight:600;letter-spacing:-0.025em;color:var(--on-surface);line-height:1.1;margin-bottom:20px;}
+.section-title em{font-style:normal;color:var(--primary);}
+.section-sub{font-family:'Hanken Grotesk',sans-serif;font-size:16px;line-height:1.75;color:var(--on-surface-dim);max-width:560px;margin-bottom:56px;}
+
+/* ── HERO ── */
+.hero{
+  padding:88px 0 80px;
+  border-bottom:1px solid var(--outline-dim);
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background-image:linear-gradient(var(--intro-grid) 1px,transparent 1px),linear-gradient(90deg,var(--intro-grid) 1px,transparent 1px);
+  background-size:64px 64px;pointer-events:none;
+}
+.hero-glow{
+  position:absolute;top:-200px;right:-100px;
+  width:600px;height:600px;
+  background:radial-gradient(circle,var(--hero-glow) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-inner{position:relative;z-index:1;max-width:760px;}
+.hero-eyebrow{font-family:'Geist',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--green-text);display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.hero-eyebrow-line{width:24px;height:1px;background:var(--green-text);}
+.hero-h1{font-family:'Public Sans',sans-serif;font-size:clamp(40px,4.5vw,64px);font-weight:700;letter-spacing:-0.03em;line-height:1.05;color:var(--on-surface);margin-bottom:24px;}
+.hero-h1 em{font-style:normal;color:var(--primary);}
+.hero-sub{font-family:'Hanken Grotesk',sans-serif;font-size:17px;line-height:1.75;color:var(--on-surface-dim);max-width:580px;margin-bottom:40px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:0.5rem;font-family:'Geist',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;transition:all 0.2s;cursor:pointer;border:1px solid transparent;}
+.btn-primary{background:var(--primary);color:var(--on-primary);}
+.btn-primary:hover{background:var(--secondary);}
+.btn-ghost{border-color:var(--outline-dim);color:var(--on-surface-dim);}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary);}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;}
+
+/* ── PLATFORM MOCKUP ── */
+.mockup-wrap{
+  margin-top:64px;
+  border:1px solid var(--outline-dim);
+  border-radius:1rem;
+  overflow:hidden;
+  background:var(--surface-mid);
+  box-shadow:0 32px 80px rgba(0,0,0,0.4);
+}
+
+/* Mockup top bar */
+.mockup-bar{
+  background:var(--surface-low);
+  border-bottom:1px solid var(--outline-dim);
+  padding:0 20px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.mockup-bar-left{display:flex;align-items:center;gap:12px;}
+.mockup-back{font-family:'Geist',monospace;font-size:10px;letter-spacing:0.06em;color:var(--on-surface-dim);border:1px solid var(--outline-dim);border-radius:0.25rem;padding:4px 10px;cursor:default;}
+.mockup-sub-id{font-family:'Public Sans',sans-serif;font-size:16px;font-weight:700;color:var(--on-surface);}
+.mockup-badge{font-family:'Geist',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--primary);border-radius:9999px;color:var(--primary);}
+.mockup-bar-right{font-family:'Geist',monospace;font-size:10px;letter-spacing:0.06em;color:var(--on-surface-dim);}
+.mockup-bar-right span{color:var(--primary);}
+
+/* Three-panel layout */
+.mockup-panels{
+  display:grid;
+  grid-template-columns:1fr 1.1fr 1fr;
+  gap:0;
+  min-height:520px;
+}
+.mockup-panel{
+  border-right:1px solid var(--outline-dim);
+  padding:24px 22px;
+  display:flex;flex-direction:column;gap:0;
+}
+.mockup-panel:last-child{border-right:none;}
+
+/* Panel headers */
+.panel-h{font-family:'Public Sans',sans-serif;font-size:14px;font-weight:600;color:var(--on-surface);margin-bottom:3px;}
+.panel-sub{font-family:'Geist',monospace;font-size:9px;letter-spacing:0.08em;color:var(--on-surface-dim);margin-bottom:18px;}
+
+/* Context panel */
+.ctx-section-label{font-family:'Geist',monospace;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--on-surface-dim);padding:10px 0 8px;border-top:1px solid var(--outline-dim);margin-top:10px;}
+.ctx-section-label:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+.ctx-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;margin-bottom:4px;}
+.ctx-field-label{font-family:'Geist',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--on-surface-dim);margin-bottom:2px;}
+.ctx-field-value{font-family:'Hanken Grotesk',sans-serif;font-size:12px;color:var(--on-surface);}
+.ctx-field-value.check{color:var(--green-text);}
+.ctx-full{margin-bottom:10px;}
+
+/* Score panel */
+.score-panel-score{text-align:center;padding:20px 0 16px;}
+.score-e{font-family:'Public Sans',sans-serif;font-size:20px;font-weight:600;color:var(--on-surface-dim);}
+.score-num{font-family:'Geist',monospace;font-size:72px;font-weight:700;letter-spacing:-0.05em;color:var(--on-surface);line-height:1;}
+.score-tier{font-family:'Public Sans',sans-serif;font-size:15px;font-weight:600;color:var(--on-surface);margin-top:6px;}
+.score-action-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;}
+.score-action-label{font-family:'Geist',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--on-surface-dim);}
+.score-action-val{font-family:'Geist',monospace;font-size:11px;font-weight:700;letter-spacing:0.08em;color:var(--green-text);}
+
+/* Score bar */
+.score-bar-wrap{margin:14px 0 20px;}
+.score-bar-track{height:5px;border-radius:3px;background:linear-gradient(90deg,#b03020 0%,#c8871a 45%,var(--green-text) 100%);position:relative;}
+.score-needle{position:absolute;top:-5px;left:0%;width:2px;height:15px;background:var(--on-surface);border-radius:1px;transform:translateX(-50%);transition:left 1.4s cubic-bezier(0.34,1.2,0.64,1);}
+.score-bar-labels{display:flex;justify-content:space-between;margin-top:5px;}
+.score-bar-label{font-family:'Geist',monospace;font-size:8px;letter-spacing:0.06em;color:var(--on-surface-dim);}
+
+/* Domain bars */
+.domain-section-label{font-family:'Geist',monospace;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--on-surface-dim);margin-bottom:10px;padding-top:14px;border-top:1px solid var(--outline-dim);}
+.domain-list{display:flex;flex-direction:column;gap:8px;}
+.domain-row{display:grid;grid-template-columns:100px 1fr 36px;align-items:center;gap:8px;}
+.domain-name{font-family:'Geist',monospace;font-size:9px;letter-spacing:0.06em;color:var(--on-surface-dim);}
+.domain-bar-track{height:4px;border-radius:2px;background:var(--surface-highest);overflow:hidden;}
+.domain-bar-fill{height:100%;border-radius:2px;transition:width 1s cubic-bezier(0.4,0,0.2,1);}
+.domain-bar-fill.green{background:var(--green-text);}
+.domain-bar-fill.amber{background:var(--amber-text);}
+.domain-val{font-family:'Geist',monospace;font-size:11px;font-weight:700;text-align:right;color:var(--on-surface);}
+.domain-val.green{color:var(--green-text);}
+.domain-val.amber{color:var(--amber-text);}
+
+/* Decision panel */
+.notes-label{font-family:'Geist',monospace;font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--on-surface-dim);display:flex;justify-content:space-between;margin-bottom:8px;}
+.notes-box{
+  border:1px solid var(--outline-dim);border-radius:0.5rem;
+  padding:12px;min-height:110px;
+  font-family:'Hanken Grotesk',sans-serif;font-size:12px;line-height:1.6;
+  color:var(--on-surface-dim);
+  background:var(--surface-low);
+  flex:1;
+}
+.decision-actions{margin-top:16px;display:flex;flex-direction:column;gap:8px;}
+.decision-approve{
+  background:var(--primary);color:var(--on-primary);
+  font-family:'Geist',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;
+  padding:14px;border-radius:0.5rem;text-align:center;cursor:default;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.decision-decline{
+  border:1px solid var(--red-text);color:var(--red-text);
+  font-family:'Geist',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;
+  padding:12px;border-radius:0.5rem;text-align:center;cursor:default;
+  background:transparent;
+}
+.decision-note{
+  margin-top:10px;
+  background:var(--surface-low);border:1px solid var(--outline-dim);border-radius:0.5rem;padding:12px;
+  font-family:'Geist',monospace;font-size:9px;line-height:1.7;letter-spacing:0.03em;
+  color:var(--on-surface-dim);
+}
+
+/* ── THREE STEPS ── */
+.steps-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--outline-dim);
+  border:1px solid var(--outline-dim);border-radius:1rem;overflow:hidden;
+}
+.step-card{
+  background:var(--surface-mid);padding:36px 32px;
+  display:flex;flex-direction:column;gap:14px;
+  transition:background 0.2s;position:relative;overflow:hidden;
+}
+.step-card:hover{background:var(--surface-high);}
+.step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--outline-dim);transition:background 0.2s;}
+.step-card:hover::before{background:var(--primary);}
+.step-num{font-family:'Geist',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--on-surface-dim);opacity:0.5;}
+.step-title{font-family:'Public Sans',sans-serif;font-size:18px;font-weight:600;color:var(--on-surface);line-height:1.25;}
+.step-body{font-family:'Hanken Grotesk',sans-serif;font-size:13px;line-height:1.7;color:var(--on-surface-dim);}
+.step-detail{display:flex;flex-direction:column;gap:6px;margin-top:4px;padding-top:16px;border-top:1px solid var(--outline-dim);}
+.step-detail-item{display:flex;align-items:center;gap:8px;font-family:'Geist',monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--on-surface-dim);}
+.step-detail-item::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--green-text);flex-shrink:0;}
+
+/* ── OUTPUT CARDS ── */
+.output-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.output-card{
+  background:var(--surface-mid);border:1px solid var(--outline-dim);border-radius:1rem;padding:24px;
+  display:flex;flex-direction:column;gap:10px;
+  transition:background 0.2s,border-color 0.2s;
+}
+.output-card:hover{background:var(--surface-high);border-color:var(--primary);}
+.output-icon{font-size:22px;color:var(--primary);}
+.output-title{font-family:'Public Sans',sans-serif;font-size:14px;font-weight:600;color:var(--on-surface);}
+.output-body{font-family:'Hanken Grotesk',sans-serif;font-size:13px;line-height:1.65;color:var(--on-surface-dim);}
+
+/* ── WORKFLOW STATES ── */
+.states-row{display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none;border:1px solid var(--outline-dim);border-radius:1rem;overflow:hidden;}
+.states-row::-webkit-scrollbar{display:none;}
+.state-item{
+  flex:1;min-width:140px;
+  padding:20px 20px;
+  border-right:1px solid var(--outline-dim);
+  display:flex;flex-direction:column;gap:6px;
+  transition:background 0.2s;
+}
+.state-item:last-child{border-right:none;}
+.state-item:hover{background:var(--surface-low);}
+.state-dot{width:8px;height:8px;border-radius:50%;margin-bottom:4px;}
+.state-dot.green{background:var(--green-text);}
+.state-dot.amber{background:var(--amber-text);}
+.state-dot.blue{background:var(--primary);}
+.state-dot.red{background:var(--red-text);}
+.state-dot.dim{background:var(--on-surface-dim);}
+.state-name{font-family:'Geist',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--on-surface);}
+.state-desc{font-family:'Hanken Grotesk',sans-serif;font-size:11px;line-height:1.5;color:var(--on-surface-dim);}
+
+/* ── CTA ── */
+.cta-band{background:var(--surface-low);padding:80px 0;text-align:center;}
+.cta-ctas{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:36px;}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1);}
+.reveal.revealed{opacity:1;transform:none;}
+.stagger>*{opacity:0;transform:translateY(16px);transition:opacity 0.5s cubic-bezier(0.16,1,0.3,1),transform 0.5s cubic-bezier(0.16,1,0.3,1);}
+.stagger.revealed>*:nth-child(1){opacity:1;transform:none;transition-delay:0ms;}
+.stagger.revealed>*:nth-child(2){opacity:1;transform:none;transition-delay:80ms;}
+.stagger.revealed>*:nth-child(3){opacity:1;transform:none;transition-delay:160ms;}
+.stagger.revealed>*:nth-child(4){opacity:1;transform:none;transition-delay:240ms;}
+.stagger.revealed>*:nth-child(5){opacity:1;transform:none;transition-delay:320ms;}
+.stagger.revealed>*:nth-child(6){opacity:1;transform:none;transition-delay:400ms;}
+
+/* ── FOOTER ── */
+footer{background:var(--surface-low);border-top:1px solid var(--outline-dim);padding:40px 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;}
+.footer-copy{font-family:'Geist',monospace;font-size:10px;letter-spacing:0.08em;color:var(--on-surface-dim);margin-top:4px;}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap;}
+.footer-links a{font-family:'Geist',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--on-surface-dim);transition:color 0.2s;}
+.footer-links a:hover{color:var(--primary);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){.mockup-panels{grid-template-columns:1fr;}.mockup-panel{border-right:none;border-bottom:1px solid var(--outline-dim);}.mockup-panel:last-child{border-bottom:none;}}
+@media(max-width:900px){nav{display:none;}.steps-grid,.output-grid{grid-template-columns:1fr;}.states-row{flex-direction:column;}.state-item{border-right:none;border-bottom:1px solid var(--outline-dim);}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+  <div class="nav-wordmark">
+    <span class="nav-equality">eQuality</span>
+    <span class="nav-index">Index</span>
+  </div>
+  <nav>
+    <a href="equality-index.html">Overview</a>
+    <a href="insurance.html">Insurance</a>
+    <a href="#" class="active">Platform</a>
+    <a href="methodology.html">Methodology</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+      <span class="material-symbols-outlined" id="themeIcon" style="font-size:18px;">light_mode</span>
+    </button>
+    <button class="nav-pill primary">Login</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-eyebrow"><span class="hero-eyebrow-line"></span>Platform</div>
+        <h1 class="hero-h1">Submission in.<br><em>Decision out.</em></h1>
+        <p class="hero-sub">eQuality takes a property submission and produces a scored, tiered, action-mapped output — with full domain decomposition, evidence provenance, and a structured decision record — all in a single workflow.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-primary">
+            <span class="material-symbols-outlined" style="font-size:15px;">analytics</span>
+            Get Equality Score
+          </button>
+          <a href="methodology.html" class="btn btn-ghost">
+            <span class="material-symbols-outlined" style="font-size:15px;">description</span>
+            View Methodology
+          </a>
+        </div>
+      </div>
+
+      <!-- PLATFORM MOCKUP -->
+      <div class="mockup-wrap reveal">
+
+        <!-- Status row above panels -->
+        <div style="padding:10px 20px;border-bottom:1px solid var(--outline-dim);display:flex;align-items:center;gap:10px;background:var(--surface-low);">
+          <span class="mockup-badge">Due Diligence</span>
+        </div>
+
+        <!-- Three panels -->
+        <div class="mockup-panels">
+
+          <!-- PANEL 1: Context -->
+          <div class="mockup-panel">
+            <div class="panel-h">Context</div>
+            <div class="panel-sub">Read-only — submitted by broker</div>
+
+            <div class="ctx-section-label">Property</div>
+            <div class="ctx-grid">
+              <div>
+                <div class="ctx-field-label">Name</div>
+                <div class="ctx-field-value">Hargrove Industrial</div>
+              </div>
+              <div>
+                <div class="ctx-field-label">State</div>
+                <div class="ctx-field-value">OH</div>
+              </div>
+            </div>
+            <div class="ctx-full">
+              <div class="ctx-field-label">Address</div>
+              <div class="ctx-field-value">2840 Lakeside Industrial Pkwy · Cleveland</div>
+            </div>
+            <div class="ctx-full">
+              <div class="ctx-field-label">Parcel ID</div>
+              <div class="ctx-field-value">CUY-2024-0471-B</div>
+            </div>
+
+            <div class="ctx-section-label">Intake Summary</div>
+            <div class="ctx-grid">
+              <div>
+                <div class="ctx-field-label">Owner</div>
+                <div class="ctx-field-value check">— ✓</div>
+              </div>
+              <div>
+                <div class="ctx-field-label">Owner Email</div>
+                <div class="ctx-field-value" style="font-size:10px;">m.delacroix@<br>hargroveind.com</div>
+              </div>
+              <div>
+                <div class="ctx-field-label">Broker</div>
+                <div class="ctx-field-value check">— ✓</div>
+              </div>
+              <div>
+                <div class="ctx-field-label">Broker Email</div>
+                <div class="ctx-field-value" style="font-size:10px;">t.wren@<br>axisenvironmental.com</div>
+              </div>
+            </div>
+            <div class="ctx-full" style="margin-top:8px;">
+              <div class="ctx-field-label">Inspection Date</div>
+              <div class="ctx-field-value">March 14, 2026</div>
+            </div>
+
+            <div class="ctx-section-label">Environmental Context</div>
+            <div class="ctx-full">
+              <div class="ctx-field-label">Concerns</div>
+              <div class="ctx-field-value" style="font-size:12px;line-height:1.6;">Historic metal finishing operations on-site through 1991. Prior Phase I identified RECs related to solvent use. No Phase II conducted. Operator reports no known active contamination.</div>
+            </div>
+          </div>
+
+          <!-- PANEL 2: Score -->
+          <div class="mockup-panel">
+            <div class="panel-h">eQuality score</div>
+            <div class="panel-sub">Computed from submitted intake data</div>
+
+            <div class="score-panel-score">
+              <div style="display:flex;align-items:baseline;justify-content:center;gap:1px;">
+                <span class="score-e">e</span>
+                <span class="score-num" id="mockScore">512</span>
+              </div>
+              <div class="score-tier">Tier 5 — Severe</div>
+              <div class="score-action-row">
+                <span class="score-action-label">Action ·</span>
+                <span class="score-action-val" style="color:var(--red-text);">DECLINE</span>
+              </div>
+            </div>
+
+            <div class="score-bar-wrap">
+              <div class="score-bar-track">
+                <div class="score-needle" id="mockNeedle"></div>
+              </div>
+              <div class="score-bar-labels">
+                <span class="score-bar-label">300</span>
+                <span class="score-bar-label">850</span>
+              </div>
+            </div>
+
+            <div class="domain-section-label">Domain Decomposition</div>
+            <div class="domain-list">
+              <div class="domain-row">
+                <div class="domain-name">RR · Regulatory</div>
+                <div class="domain-bar-track"><div class="domain-bar-fill amber" style="width:0%" data-w="68%"></div></div>
+                <div class="domain-val amber">68</div>
+              </div>
+              <div class="domain-row">
+                <div class="domain-name">CL · Contamination</div>
+                <div class="domain-bar-track"><div class="domain-bar-fill amber" style="width:0%" data-w="55%"></div></div>
+                <div class="domain-val amber">55</div>
+              </div>
+              <div class="domain-row">
+                <div class="domain-name">RM · Remediation</div>
+                <div class="domain-bar-track"><div class="domain-bar-fill amber" style="width:0%" data-w="60%"></div></div>
+                <div class="domain-val amber">60</div>
+              </div>
+              <div class="domain-row">
+                <div class="domain-name">SC · Site context</div>
+                <div class="domain-bar-track"><div class="domain-bar-fill green" style="width:0%" data-w="75%"></div></div>
+                <div class="domain-val green">75</div>
+              </div>
+              <div class="domain-row">
+                <div class="domain-name">OR · Operator</div>
+                <div class="domain-bar-track"><div class="domain-bar-fill amber" style="width:0%" data-w="48%"></div></div>
+                <div class="domain-val amber">48</div>
+              </div>
+              <div class="domain-row">
+                <div class="domain-name">DU · Data uncertainty</div>
+                <div class="domain-bar-track"><div class="domain-bar-fill amber" style="width:0%" data-w="40%"></div></div>
+                <div class="domain-val amber">40</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANEL 3: Decision -->
+          <div class="mockup-panel">
+            <div class="panel-h">Decision</div>
+            <div class="panel-sub">Underwriter notes + action</div>
+
+            <div class="notes-label">
+              <span>Notes</span>
+              <span>0/500</span>
+            </div>
+            <div class="notes-box">Reasoning, conditions, follow-ups…</div>
+
+            <div class="decision-actions">
+              <div class="decision-approve">
+                Approve &amp; Propose →
+              </div>
+              <div class="decision-decline">Decline</div>
+            </div>
+
+            <div class="decision-note">
+              Underwriter actions are logged and recorded against this submission. Both outcomes are retained for review.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ HOW IT WORKS ══ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-label reveal">How it works</div>
+      <h2 class="section-title reveal">Three panels.<br><em>One decision.</em></h2>
+      <p class="section-sub reveal">Every submission moves through the same structured workflow — context in, score computed, decision recorded. Nothing is unlogged. Nothing is unversioned.</p>
+
+      <div class="steps-grid stagger">
+        <div class="step-card">
+          <div class="step-num">Panel 01</div>
+          <div class="step-title">Context</div>
+          <div class="step-body">Property and intake data submitted by the broker — read-only from the underwriter's view. Parcel ID, address, ownership, and environmental context are locked at submission and cannot be modified downstream.</div>
+          <div class="step-detail">
+            <div class="step-detail-item">Property address + parcel ID</div>
+            <div class="step-detail-item">Owner + broker identity</div>
+            <div class="step-detail-item">Environmental context flags</div>
+            <div class="step-detail-item">Inspection date (if available)</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">Panel 02</div>
+          <div class="step-title">eQuality Score</div>
+          <div class="step-body">The score is computed from the submitted data using the scoring formula. Domain decomposition shows the contribution of each risk area. The output is deterministic — the same inputs always produce the same score under the same model version.</div>
+          <div class="step-detail">
+            <div class="step-detail-item">e[score] on 300–850 scale</div>
+            <div class="step-detail-item">Risk tier + capital action</div>
+            <div class="step-detail-item">Six domain scores (RR, CL, RM, SC, OR, DU)</div>
+            <div class="step-detail-item">Model version + hash</div>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">Panel 03</div>
+          <div class="step-title">Decision</div>
+          <div class="step-body">The underwriter records reasoning and selects an action. Both outcomes are logged and the submission state updates accordingly. Every decision is retained and traceable.</div>
+          <div class="step-detail">
+            <div class="step-detail-item">Underwriter notes (up to 500 chars)</div>
+            <div class="step-detail-item">Approve &amp; Propose or Decline</div>
+            <div class="step-detail-item">Immutable audit log entry</div>
+            <div class="step-detail-item">Submission state transition</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WORKFLOW STATES ══ -->
+  <section class="section">
+    <div class="container reveal">
+      <div class="section-label">Submission States</div>
+      <h2 class="section-title">Every submission has<br><em>a clear state</em></h2>
+      <p class="section-sub">No submission sits in an undefined state. Every stage is named, logged, and traceable to the action that caused it.</p>
+
+      <div class="states-row stagger">
+        <div class="state-item">
+          <div class="state-dot blue"></div>
+          <div class="state-name">Intake</div>
+          <div class="state-desc">Submission received. Property and broker data locked. Awaiting score computation.</div>
+        </div>
+        <div class="state-item">
+          <div class="state-dot amber"></div>
+          <div class="state-name">Due Diligence</div>
+          <div class="state-desc">Score computed. Under active underwriter review. Decision pending.</div>
+        </div>
+        <div class="state-item">
+          <div class="state-dot green"></div>
+          <div class="state-name">Proposal Sent</div>
+          <div class="state-desc">Underwriter approved. Score frozen. Proposal routed to broker.</div>
+        </div>
+        <div class="state-item">
+          <div class="state-dot red"></div>
+          <div class="state-name">Declined by UW</div>
+          <div class="state-desc">Underwriter declined. Decision recorded with notes.</div>
+        </div>
+        <div class="state-item">
+          <div class="state-dot dim"></div>
+          <div class="state-name">Closed</div>
+          <div class="state-desc">Submission resolved. Full audit trail preserved and retained for review.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WHAT YOU GET ══ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-label reveal">Score Output</div>
+      <h2 class="section-title reveal">What every score<br><em>includes</em></h2>
+      <p class="section-sub reveal">Every issued eQuality score carries a complete set of structured outputs — not just a number.</p>
+
+      <div class="output-grid stagger">
+        <div class="output-card">
+          <div class="output-icon"><span class="material-symbols-outlined">analytics</span></div>
+          <div class="output-title">eScore + Risk Tier</div>
+          <div class="output-body">The external score on a 300–850 scale, formatted as e[score], with a risk tier classification (Tier 1–5) and a capital action: proceed, reprice, escalate diligence, or decline.</div>
+        </div>
+        <div class="output-card">
+          <div class="output-icon"><span class="material-symbols-outlined">bar_chart</span></div>
+          <div class="output-title">Domain Decomposition</div>
+          <div class="output-body">Individual scores across all six risk domains — Regulatory, Contamination, Remediation, Site Context, Operator, and Data Uncertainty — showing the contribution of each area to the final score.</div>
+        </div>
+        <div class="output-card">
+          <div class="output-icon"><span class="material-symbols-outlined">verified</span></div>
+          <div class="output-title">Confidence Level</div>
+          <div class="output-body">A data quality signal — High, Moderate, or Low — reflecting the completeness and reliability of the underlying evidence. Separate from the score value.</div>
+        </div>
+        <div class="output-card">
+          <div class="output-icon"><span class="material-symbols-outlined">fact_check</span></div>
+          <div class="output-title">Evidence Posture</div>
+          <div class="output-body">A breakdown of activated scoring inputs by evidence tier — showing whether the score is driven by authoritative Tier 1 records or lower-tier inferred signals.</div>
+        </div>
+        <div class="output-card">
+          <div class="output-icon"><span class="material-symbols-outlined">warning</span></div>
+          <div class="output-title">Tail Overlay Flags</div>
+          <div class="output-body">Structured metadata flags for latent risk exposures — including emerging contaminants and plume migration — for downstream actuarial analysis and reserving decisions.</div>
+        </div>
+        <div class="output-card">
+          <div class="output-icon"><span class="material-symbols-outlined">history</span></div>
+          <div class="output-title">Immutable Audit Record</div>
+          <div class="output-body">Every score is issued with a timestamp and hash. Decisions are logged and retained. Historical scores are never retroactively modified.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA ══ -->
+  <div class="cta-band">
+    <div class="container">
+      <div class="section-label" style="justify-content:center;">Get Started</div>
+      <h2 class="section-title" style="max-width:520px;margin:0 auto 12px;">A complete underwriting workflow<br>built around the eScore.</h2>
+      <p class="section-sub" style="margin:0 auto;text-align:center;">For institutional and enterprise inquiries.</p>
+      <div class="cta-ctas">
+        <button class="btn btn-primary">
+          <span class="material-symbols-outlined" style="font-size:15px;">analytics</span>
+          Get Equality Score
+        </button>
+        <a href="methodology.html" class="btn btn-ghost">
+          <span class="material-symbols-outlined" style="font-size:15px;">description</span>
+          View Methodology
+        </a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div>
+    <div class="nav-wordmark">
+      <span class="nav-equality">eQuality</span>
+      <span class="nav-index">Index</span>
+    </div>
+    <div class="footer-copy">© 2026 IEIT · Insurance Workflow Platform</div>
+  </div>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Regulatory Disclosure</a>
+    <a href="#">Contact Support</a>
+  </div>
+</footer>
+
+<script>
+/* ── Theme ── */
+function toggleTheme() {
+  const root = document.documentElement;
+  const icon = document.getElementById('themeIcon');
+  const isLight = root.getAttribute('data-theme') === 'light';
+  if (isLight) { root.removeAttribute('data-theme'); icon.textContent = 'light_mode'; }
+  else { root.setAttribute('data-theme', 'light'); icon.textContent = 'dark_mode'; }
+}
+if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+  document.documentElement.setAttribute('data-theme', 'light');
+  document.getElementById('themeIcon').textContent = 'dark_mode';
+}
+
+/* ── Scroll reveal ── */
+(function() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal, .stagger').forEach(el => obs.observe(el));
+})();
+
+/* ── Needle + domain bars animate on scroll ── */
+(function() {
+  const mockup = document.querySelector('.mockup-wrap');
+  if (!mockup) return;
+  let animated = false;
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !animated) {
+      animated = true;
+      // needle: e512 → (512-300)/550 = 38.5%
+      setTimeout(() => {
+        const needle = document.getElementById('mockNeedle');
+        if (needle) { needle.style.left = '0%'; setTimeout(() => { needle.style.left = '38.5%'; }, 100); }
+      }, 400);
+      // domain bars
+      setTimeout(() => {
+        document.querySelectorAll('.domain-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.w;
+        });
+      }, 700);
+      obs.unobserve(mockup);
+    }
+  }, { threshold: 0.2 });
+  obs.observe(mockup);
+})();
+
+/* ── Cursor glow ── */
+(function() {
+  const g = document.createElement('div');
+  g.style.cssText = 'position:fixed;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(190,198,224,0.03) 0%,transparent 70%);pointer-events:none;z-index:0;transform:translate(-50%,-50%);';
+  document.body.appendChild(g);
+  document.addEventListener('mousemove', e => { g.style.left = e.clientX + 'px'; g.style.top = e.clientY + 'px'; });
+})();
+
+/* ── Output card tilt ── */
+(function() {
+  document.querySelectorAll('.output-card, .step-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `translateY(-3px) rotateX(${-y*3}deg) rotateY(${x*3}deg)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    card.style.transformStyle = 'preserve-3d';
+    card.style.transition = 'transform 0.4s cubic-bezier(0.16,1,0.3,1), background 0.2s, border-color 0.2s';
+  });
+})();
+</script>
+</body>
+</html>
